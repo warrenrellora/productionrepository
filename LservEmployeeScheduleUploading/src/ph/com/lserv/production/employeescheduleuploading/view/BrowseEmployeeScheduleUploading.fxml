@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.formatteddatepicker.FormattedDatePicker?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lserv.production.employeescheduleuploading.view.BrowseEmployeeScheduleUploadingController">
+   <children>
+      <BorderPane layoutX="422.0" layoutY="108.0" prefHeight="727.0" prefWidth="1309.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="35.0" prefWidth="1299.0" BorderPane.alignment="CENTER">
+              <items>
+                  <Button fx:id="buttonCollect" mnemonicParsing="false" onAction="#handleCollect" prefHeight="25.0" prefWidth="60.0" text="Collect" />
+                <Button fx:id="buttonUpload" mnemonicParsing="false" onAction="#handleUpload" prefHeight="25.0" prefWidth="58.0" text="Upload" />
+                  <Button fx:id="buttonPrint" mnemonicParsing="false" onAction="#handlePrint" prefHeight="25.0" prefWidth="52.0" text="Print" />
+                  <Button fx:id="buttonSearch" mnemonicParsing="false" onAction="#handleSearch" prefHeight="25.0" prefWidth="52.0" text="Search" />
+                  <Button fx:id="buttonValidate" mnemonicParsing="false" onAction="#handleValidate" prefHeight="25.0" prefWidth="62.0" text="Validate" />
+                  <Button fx:id="buttonProcess" mnemonicParsing="false" onAction="#handleProcess" prefHeight="25.0" prefWidth="62.0" text="Process" />
+              </items>
+            </ToolBar>
+         </top>
+         <left>
+            <GridPane prefHeight="870.0" prefWidth="413.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="131.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="34.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="143.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints maxHeight="31.0" minHeight="-Infinity" prefHeight="28.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="29.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="200.0" prefHeight="595.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Client:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <AutoFillComboBox fx:id="comboBoxClient" prefHeight="25.0" prefWidth="348.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                  <FormattedDatePicker fx:id="datePickerPayFrom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <FormattedDatePicker fx:id="datePickerPayTo" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label prefHeight="17.0" prefWidth="18.0" text="To:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="108.0" text="Pay Period from:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Deparment:" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <AutoFillComboBox fx:id="comboBoxDepartment" prefHeight="25.0" prefWidth="348.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" text="Employees" GridPane.columnSpan="4" GridPane.rowIndex="4">
+                     <content>
+                        <TableView fx:id="tableViewEmployee" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="501.0" prefWidth="408.0">
+                          <columns>
+                              <TableColumn fx:id="tableColumnValidated" minWidth="9.0" prefWidth="11.0" />
+                              <TableColumn fx:id="tableColumnEmployeeCheckbox" minWidth="0.0" prefWidth="27.0" />
+                            <TableColumn fx:id="tableColumnEmployeeId" prefWidth="89.0" text="Employee ID" />
+                              <TableColumn fx:id="tableColumnEmployeeName" prefWidth="281.0" text="Name" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="695.0" prefWidth="903.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TitledPane collapsible="false" layoutX="7.0" layoutY="8.0" prefHeight="625.0" prefWidth="880.0" text="Biometric Details">
+                     <content>
+                        <TableView fx:id="tableViewDetails" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="878.0">
+                          <columns>
+                              <TableColumn fx:id="tableColumnDate" maxWidth="555.0" minWidth="-Infinity" prefWidth="152.0" text="Date" />
+                            <TableColumn fx:id="tableColumnTimeIn" maxWidth="589.0" minWidth="-Infinity" prefWidth="115.0" text="Time in" />
+                            <TableColumn fx:id="tableColumnLunchOut" maxWidth="514.0" minWidth="-Infinity" prefWidth="115.0" text="Lunch out" />
+                              <TableColumn fx:id="tableColumnLunchIn" maxWidth="207.0" minWidth="-Infinity" prefWidth="115.0" text="Lunch in" />
+                              <TableColumn fx:id="tableColumnTimeOut" maxWidth="215.0" minWidth="-Infinity" prefWidth="115.0" text="Time out" />
+                              <TableColumn fx:id="tableColumnDay" maxWidth="232.0" minWidth="-Infinity" prefWidth="128.0" text="Day" />
+                              <TableColumn fx:id="tableColumnRemarks" maxWidth="382.0" minWidth="-Infinity" prefWidth="150.0" text="Remarks" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

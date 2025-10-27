@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.employeescheduleuploading.data.mapper.EmployeeScheduleUploadingMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='EmployeeScheduleUploading'
+		id='EmployeeScheduleUploadingResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+		<id property='employeeId' column='emp_id' />
+		<id property='bioId' column='bio_id' />
+		<id property='dateEntry' column='date_entry' />
+		<id property='timeInEntry' column='time_in' />
+		<id property='lunchOutEntry' column='lunch_out' />
+		<id property='lunchInEntry' column='lunch_in' />
+		<id property='timeOutEntry' column='time_out' />
+		<id property='dayOfDate' column='day_of_date' />
+		<id property='payFrom' column='pay_from' />
+		<id property='payTo' column='pay_to' />
+		<id property='cutoffFrom' column='cutoff_from' />
+		<id property='cutoffTo' column='cutoff_to' />
+		<id property='isHoliday' column='is_holiday' />
+		<id property='isRestDay' column='is_rest_day' />
+		<id property='isRegularSchedule' column='is_regular_schedule' />
+		<id property='schedule' column='schedule' />
+		<id property='undertime' column='undertime_min' />
+		<id property='allowedOvertime' column='allowed_overtime' />
+		<id property='isValidated' column='is_validated' />
+		<id property='bioArms' column='bio_arms' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='employmentHistory' column='emp_id'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getMaxEmploymentHistory' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+		<association property="department" column="dept_no"
+			select="ph.com.lbpsc.production.department.data.mapper.DepartmentMapper.getDepartmentByCode" />
+
+		<association property='remarksReference' column='remarks'
+			select='ph.com.lserv.production.remarksreference.data.mapper.RemarksReferenceMapper.getDataById' />
+
+		<association property='scheduleEncoding'
+			column='prikey_reference_schedule_encoding'
+			select='ph.com.lserv.production.scheduleencoding.data.mapper.ScheduleEncodingMapper.getDataById' />
+
+		<association property='employeeScheduleEncodingIrregular'
+			column='prikey_employee_irregular_schedule_encoding'
+			select='ph.com.lserv.production.employeescheduleencodingirregular.data.mapper.EmployeeScheduleEncodingIrregularMapper.getEmployeeIrregularScheduleByPrikey' />
+
+		<collection property="overtimeBreakdownList"
+			javaType="ArrayList" column="prikey" notNullColumn="prikey"
+			select='ph.com.lserv.production.employeescheduleuploadingovertimebreakdown.data.mapper.EmployeeScheduleUploadingOvertimeBreakdownMapper.getDataByPrikeyEmployeeScheduleUploading' />
+
+	</resultMap>
+
+	<insert id='createData'
+		parameterType='EmployeeScheduleUploading' useGeneratedKeys='true'
+		keyProperty='primaryKey'>
+		INSERT INTO
+		employee_schedule_uploading(
+		is_validated,
+		emp_id,
+		bio_id,
+		client_cd,
+		dept_no,
+		date_entry,
+		time_in,
+		lunch_out,
+		lunch_in,
+		time_out,
+		allowed_overtime,
+		undertime_min,
+		day_of_date,
+		pay_from,
+		pay_to,
+		cutoff_from,
+		cutoff_to,
+		is_holiday,
+		is_rest_day,
+		is_regular_schedule,
+		prikey_reference_schedule_encoding,
+		prikey_employee_irregular_schedule_encoding,
+		bio_arms,
+		remarks,
+		schedule,
+		prikey_user,
+		terminal_id,
+		date_updated
+		)
+		VALUES(
+		#{isValidated},
+		#{employmentHistory.employee.employeeCode},
+		#{bioId},
+		#{client.clientCode},
+		#{department.departmentCode},
+		#{dateEntry},
+		#{timeInEntry},
+		#{lunchOutEntry},
+		#{lunchInEntry},
+		#{timeOutEntry},
+		#{allowedOvertime},
+		#{undertime},
+		#{dayOfDate},
+		#{payFrom},
+		#{payTo},
+		#{cutoffFrom},
+		#{cutoffTo},
+		#{isHoliday},
+		#{isRestDay},
+		#{isRegularSchedule},
+		#{scheduleEncoding.primaryKey},
+		#{employeeScheduleEncodingIrregular.primaryKey},
+		#{bioArms},
+		#{remarksReference.primaryKey},
+		#{schedule},
+		#{user.primaryKey},
+		#{changedInComputer},
+		#{changedOnDate}
+		)
+
+	</insert>
+
+	<insert id="createMultipleData" useGeneratedKeys="true">
+		INSERT INTO employee_schedule_uploading(
+		is_validated,
+		emp_id,
+		bio_id,
+		client_cd,
+		dept_no,
+		date_entry,
+		time_in,
+		lunch_out,
+		lunch_in,
+		time_out,
+		allowed_overtime,
+		undertime_min,
+		day_of_date,
+		pay_from,
+		pay_to,
+		cutoff_from,
+		cutoff_to,
+		is_holiday,
+		is_rest_day,
+		is_regular_schedule,
+		prikey_reference_schedule_encoding,
+		prikey_employee_irregular_schedule_encoding,
+		bio_arms,
+		remarks,
+		schedule,
+		prikey_user,
+		terminal_id,
+		date_updated
+		)
+		VALUES
+		<foreach collection="biometricsToSaveList"
+			item="EmployeeScheduleUploading" separator=",">
+			(
+			#{EmployeeScheduleUploading.isValidated},
+			#{EmployeeScheduleUploading.employmentHistory.employee.employeeCode},
+			#{EmployeeScheduleUploading.bioId},
+			#{EmployeeScheduleUploading.client.clientCode},
+			#{EmployeeScheduleUploading.department.departmentCode},
+			#{EmployeeScheduleUploading.dateEntry},
+			#{EmployeeScheduleUploading.timeInEntry},
+			#{EmployeeScheduleUploading.lunchOutEntry},
+			#{EmployeeScheduleUploading.lunchInEntry},
+			#{EmployeeScheduleUploading.timeOutEntry},
+			#{EmployeeScheduleUploading.allowedOvertime},
+			#{EmployeeScheduleUploading.undertime},
+			#{EmployeeScheduleUploading.dayOfDate},
+			#{EmployeeScheduleUploading.payFrom},
+			#{EmployeeScheduleUploading.payTo},
+			#{EmployeeScheduleUploading.cutoffFrom},
+			#{EmployeeScheduleUploading.cutoffTo},
+			#{EmployeeScheduleUploading.isHoliday},
+			#{EmployeeScheduleUploading.isRestDay},
+			#{EmployeeScheduleUploading.isRegularSchedule},
+			#{EmployeeScheduleUploading.scheduleEncoding.primaryKey},
+			#{EmployeeScheduleUploading.employeeScheduleEncodingIrregular.primaryKey},
+			#{EmployeeScheduleUploading.bioArms},
+			#{EmployeeScheduleUploading.remarksReference.primaryKey},
+			#{EmployeeScheduleUploading.schedule},
+			#{EmployeeScheduleUploading.user.primaryKey},
+			#{EmployeeScheduleUploading.changedInComputer},
+			#{EmployeeScheduleUploading.changedOnDate}
+			)
+		</foreach>
+
+	</insert>
+
+	<update id='updateData'
+		parameterType='EmployeeScheduleUploading'>
+		UPDATE employee_schedule_uploading
+		SET
+		is_validated=#{isValidated},
+		emp_id=#{employmentHistory.employee.employeeCode},
+		bio_id=#{bioId},
+		client_cd=#{client.clientCode},
+		dept_no=#{department.departmentCode},
+		date_entry=#{dateEntry},
+		time_in=#{timeInEntry},
+		lunch_out=#{lunchOutEntry},
+		lunch_in=#{lunchInEntry},
+		time_out=#{timeOutEntry},
+		allowed_overtime=#{allowedOvertime},
+		undertime_min=#{undertime},
+		day_of_date=#{dayOfDate},
+		pay_from=#{payFrom},
+		pay_to=#{payTo},
+		cutoff_from=#{cutoffFrom},
+		cutoff_to=#{cutoffTo},
+		is_rest_day=#{isRestDay},
+		is_holiday=#{isHoliday},
+		is_regular_schedule=#{isRegularSchedule},
+		prikey_reference_schedule_encoding=#{scheduleEncoding.primaryKey},
+		prikey_employee_irregular_schedule_encoding=#{employeeScheduleEncodingIrregular.primaryKey},
+		bio_arms=#{bioArms},
+		remarks=#{remarksReference.primaryKey},
+		schedule=#{schedule},
+		prikey_user=#{user.primaryKey},
+		terminal_id=#{changedInComputer},
+		date_updated=#{changedOnDate}
+		WHERE
+		prikey=#{primaryKey}
+	</update>
+
+	<update id="updateMultipleData" parameterType="java.util.List">
+		UPDATE employee_schedule_uploading
+		SET
+		bio_arms=#{EmployeeScheduleUploading.bioArms},
+		time_in=#{EmployeeScheduleUploading.timeInEntry},
+		lunch_out=#{EmployeeScheduleUploading.lunchOutEntry},
+		lunch_in=#{EmployeeScheduleUploading.lunchInEntry},
+		time_out=#{EmployeeScheduleUploading.timeOutEntry},
+		cutoff_from=#{EmployeeScheduleUploading.cutoffFrom},
+		cutoff_to=#{EmployeeScheduleUploading.cutoffTo},
+		prikey_user=#{EmployeeScheduleUploading.user.primaryKey},
+		terminal_id=#{EmployeeScheduleUploading.changedInComputer},
+		date_updated=#{EmployeeScheduleUploading.changedOnDate}
+		WHERE prikey IN
+		<foreach collection="biometricsToUpdateList"
+			item="EmployeeScheduleUploading" separator="," open="(" close=")">
+			#{EmployeeScheduleUploading.primaryKey}
+		</foreach>
+	</update>
+
+	<delete id="deleteData"
+		parameterType='EmployeeScheduleUploading'>
+		DELETE FROM employee_schedule_uploading
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<delete id="deleteMultipleData" parameterType="java.util.List">
+		DELETE FROM employee_schedule_uploading
+		WHERE prikey IN
+		<foreach collection="biometricsToDeleteList"
+			item="EmployeeScheduleUploading" separator="," open="(" close=")">
+			#{EmployeeScheduleUploading.primaryKey}
+		</foreach>
+	</delete>
+
+	<update id='updateDataByPayFromPayTo'
+		parameterType='EmployeeScheduleUploading'>
+		UPDATE employee_schedule_uploading
+		SET
+		emp_id=#{employmentHistory.employee.employeeCode},
+		bio_id=#{bioId},
+		client_cd=#{client.clientCode},
+		dept_no=#{department.departmentCode},
+		time_in=#{timeInEntry},
+		lunch_out=#{lunchOutEntry},
+		lunch_in=#{lunchInEntry},
+		time_out=#{timeOutEntry},
+		day_of_date=#{dayOfDate},
+		pay_from=#{payFrom},
+		pay_to=#{payTo},
+		cutoff_from=#{cutoffFrom},
+		cutoff_to=#{cutoffTo},
+		is_regular_schedule=#{isRegularSchedule},
+		prikey_user=#{user.primaryKey},
+		terminal_id=#{changedInComputer},
+		date_updated=#{changedOnDate}
+		WHERE
+		pay_from=#{0} AND pay_to=#{1}
+	</update>
+
+	<select id="getAllData"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading;
+	</select>
+
+	<select id="getDataById"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading WHERE prikey
+		=#{primaryKey}
+	</select>
+
+	<select id="getDataByPayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM
+		employee_schedule_uploading a WHERE
+		a.pay_from=#{0}
+		AND a.pay_to=#{1} AND a.is_validated = 0
+		ORDER BY
+		a.emp_id;
+	</select>
+
+	<select id="getDataByClientPayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM
+		employee_schedule_uploading a WHERE
+		a.client_cd
+		=#{client.clientCode}
+		AND a.pay_from=#{1} AND
+		a.pay_to=#{2} AND
+		a.is_validated = 0 ORDER BY
+		a.date_entry;
+	</select>
+
+	<select id="getDataByClientPayFromPayToAll"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM
+		employee_schedule_uploading a WHERE
+		a.client_cd
+		=#{client.clientCode}
+		AND a.pay_from=#{1} AND
+		a.pay_to=#{2} ORDER BY
+		a.date_entry;
+	</select>
+
+	<select id="getDataByClientDepartmentPayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM
+		employee_schedule_uploading a WHERE
+		a.client_cd
+		=#{client.clientCode}
+		AND
+		a.dept_no=#{department.departmentCode} AND
+		a.pay_from=#{2} AND
+		a.pay_to=#{3} AND a.is_validated=#{4} ORDER BY
+		a.date_entry;
+	</select>
+
+	<select id="getDataByEmployeeIdPayFrom"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM
+		employee_schedule_uploading a WHERE
+		a.emp_id
+		=#{employeeCode} AND
+		a.pay_from=#{1} AND is_validated = 0 ORDER BY
+		a.date_entry;
+	</select>
+
+	<select id="getDataByDateEntryEmployeePayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a WHERE
+		a.emp_id=#{employeeCode} AND a.time_in LIKE #{dateEntry} AND
+		a.pay_from=#{2} AND
+		a.pay_to=#{3};
+	</select>
+
+	<select id="getAllScheduleEntriesByPayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a
+		WHERE
+		a.pay_from=#{0}
+		AND a.pay_to =#{1} AND a.is_regular_schedule =#{2};
+	</select>
+
+	<select id="getAllScheduleWithoutEntriesByPayFromPayTo"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a
+		WHERE
+		a.pay_from=#{0}
+		AND a.pay_to =#{1} AND a.is_regular_schedule IS NULL;
+	</select>
+
+	<select id="getAllEmployeeIdByPayFromPayTo" resultType="int">
+		SELECT
+		a.emp_id FROM
+		employee_schedule_uploading a
+		WHERE
+		a.pay_from =#{0} AND
+		a.pay_to =#{1} GROUP BY a.emp_id;
+	</select>
+
+	<select id="getAllEmployeeIdByClientCodePayFromPayTo"
+		resultType="int">
+		SELECT a.emp_id FROM
+		employee_schedule_uploading a
+		WHERE
+		a.client_cd =#{0} AND
+		a.pay_from
+		=#{1} AND
+		a.pay_to =#{2} GROUP BY
+		a.emp_id;
+	</select>
+
+	<select id="getAllEmployeeIdByClientCodeDepartmentPayFromPayTo"
+		resultType="int">
+		SELECT
+		DISTINCT(a.emp_id) FROM
+		employee_schedule_uploading a
+		WHERE
+		a.client_cd =#{0} AND
+		a.dept_no =#{1} AND
+		a.pay_from
+		=#{2} AND
+		a.pay_to =#{3};
+	</select>
+
+	<select id="getDataByEmployeeIdAndDateEntry"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a WHERE
+		a.emp_id=#{0} AND
+		a.date_entry =#{1};
+	</select>
+
+	<select id="getAllValidatedEmployeeIdByPayFromPayTo"
+		resultType="int">
+		SELECT DISTINCT(a.emp_id) FROM employee_schedule_uploading
+		a
+		WHERE
+		a.is_validated = 1 AND a.pay_from =#{0} AND a.pay_to =#{1};
+	</select>
+
+	<select id="countFrequencyOfLateByEmpIdPayFrom" resultType="int">
+		SELECT
+		COUNT(*) FROM employee_schedule_uploading a WHERE a.emp_id =#{0}
+		AND a.pay_from =#{1} AND a.undertime_min IS NOT NULL;
+	</select>
+
+	<select id="countTotalAbsentByEmpIdPayFrom" resultType="int">
+		SELECT
+		COUNT(*) FROM employee_schedule_uploading a WHERE a.emp_id =#{0}
+		AND
+		a.pay_from =#{1} AND a.remarks = 1;
+	</select>
+
+	<select id="computeTotalLateByEmpIdPayFrom" resultType="int">
+		SELECT
+		SUM(a.undertime_min) FROM employee_schedule_uploading a
+		WHERE
+		a.emp_id=#{0}
+		AND a.pay_from =#{1}
+		AND a.undertime_min IS NOT NULL;
+	</select>
+
+	<select id="getAllEntriesWithLateByEmpIdPayFrom"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a WHERE
+		a.emp_id=#{0} AND
+		a.pay_from =#{1} AND a.undertime_min IS NOT NULL;
+	</select>
+
+	<select id="countWorkingDaysByEmpIdPayFromPayTo"
+		resultType="int">
+		SELECT COUNT(*) FROM employee_schedule_uploading a WHERE
+		a.emp_id =#{0}
+		AND a.pay_from =#{1} AND a.pay_to =#{2}
+		AND
+		a.is_rest_day
+		= 0 AND (a.time_in IS NOT NULL AND a.time_out IS NULL
+		OR a.time_in IS
+		NULL AND a.time_out IS NOT NULL
+		OR a.time_in IS NOT NULL AND a.time_out
+		IS NOT NULL);
+	</select>
+
+	<select id="countHolidaysByEmpIdPayFrom" resultType="int">
+		SELECT
+		COUNT(*) FROM employee_schedule_uploading a
+		WHERE a.emp_id =#{0}
+		AND
+		a.pay_from =#{1} AND NOT
+		a.is_holiday = 0;
+	</select>
+
+	<select id="getDataByEmpIdDateEntryPayFrom"
+		resultMap="EmployeeScheduleUploadingResult">
+		SELECT * FROM employee_schedule_uploading a WHERE a.emp_id
+		=#{0} AND
+		a.date_entry =#{1} AND a.pay_from =#{2};
+	</select>
+
+	<select id="getAllClientCdByPayFrom" resultType="string">
+		SELECT
+		DISTINCT(a.client_cd) FROM employee_schedule_uploading a WHERE
+		a.pay_from =#{0};
+	</select>
+
+	<select id="getAllEmpIdExcludingSelectedDeptPay"
+		resultType="int">
+		SELECT a.emp_id FROM employee_schedule_uploading a
+		WHERE NOT
+		a.dept_no =#{0} AND a.client_cd =#{1}
+		AND a.pay_from =#{2} GROUP BY
+		a.emp_id;
+	</select>
+
+</mapper>
