@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="127.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lserv.production.employeescheduleuploading.view.SetEmployeeScheduleUploadingOvertimeController">
+   <children>
+      <BorderPane layoutX="52.0" prefHeight="127.0" prefWidth="341.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="18.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="52.0" text="Cancel" />
+              </items>
+            </ToolBar>
+         </top>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane layoutX="14.0" layoutY="14.0" prefHeight="68.0" prefWidth="313.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.0" minWidth="10.0" prefWidth="88.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="414.0" minWidth="10.0" prefWidth="220.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ValidatedTextField fx:id="textFieldTotalMins" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Overtime Type:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total min/s:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <AutoFillComboBox fx:id="comboBoxOvertimeType" prefHeight="25.0" prefWidth="306.0" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

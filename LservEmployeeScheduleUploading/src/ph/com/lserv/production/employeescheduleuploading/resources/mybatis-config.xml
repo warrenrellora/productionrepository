@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+PUBLIC '-//mybatis.org//DTD Config 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-config.dtd'>
+<configuration>
+	<properties
+		resource='ph/com/lserv/production/employeescheduleuploading/resources/jdbc.properties' />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmenthistory.model.EmploymentHistory'
+			alias='EmploymentHistory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employee.model.Employee'
+			alias='Employee'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleuploading.model.EmployeeScheduleUploading'
+			alias='EmployeeScheduleUploading'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleuploadingovertimebreakdown.model.EmployeeScheduleUploadingOvertimeBreakdown'
+			alias='EmployeeScheduleUploadingOvertimeBreakdown'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.client.model.Client' alias='Client'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.user.model.User'
+			alias='User'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.company.model.Company' alias='Company'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.department.model.Department'
+			alias='Department'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleencodingirregular.model.EmployeeScheduleEncodingIrregular'
+			alias='EmployeeScheduleEncodingIrregular'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.scheduleencoding.model.ScheduleEncoding'
+			alias='ScheduleEncoding'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.scheduleencodingreference.model.ScheduleEncodingReference'
+			alias='ScheduleEncodingReference'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.remarksreference.model.RemarksReference'
+			alias='RemarksReference'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.overtimefilingclient.model.OvertimeFilingClient'
+			alias='OvertimeFilingClient'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payroll.model.Payroll' alias='Payroll'></typeAlias>
+	</typeAliases>
+	<environments default='development'>
+		<environment id='development'>
+			<transactionManager type='JDBC' />
+			<dataSource type='POOLED'>
+				<property name='driver' value='${jdbc.driverClassName}' />
+				<property name='url'
+					value='jdbc:mysql://${jdbc.host}/${jdbc.schemaName}?useCompression=true' />
+				<property name='username' value='${jdbc.username}' />
+				<property name='password' value='${jdbc.password}' />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper
+			resource='ph/com/lbpsc/production/employmenthistory/data/mapper/EmploymentHistoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employee/data/mapper/EmployeeMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/overtimefilingclient/data/mapper/OvertimeFilingClientMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleuploading/data/mapper/EmployeeScheduleUploadingMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/remarksreference/data/mapper/RemarksReferenceMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleuploadingovertimebreakdown/data/mapper/EmployeeScheduleUploadingOvertimeBreakdownMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/user/data/mapper/UserMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/company/data/mapper/CompanyMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/client/data/mapper/ClientMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/department/data/mapper/DepartmentMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleencodingirregular/data/mapper/EmployeeScheduleEncodingIrregularMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/scheduleencoding/data/mapper/ScheduleEncodingMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/scheduleencodingreference/data/mapper/ScheduleEncodingReferenceMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payroll/data/mapper/PayrollMapper.xml' />
+	</mappers>
+</configuration>
