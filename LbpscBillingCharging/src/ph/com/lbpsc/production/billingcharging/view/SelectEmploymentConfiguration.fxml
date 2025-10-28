@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.formatteddatepicker.FormattedDatePicker?>
+
+<AnchorPane prefHeight="646.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lbpsc.production.billingcharging.view.SelectEmploymentConfigurationController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="35.0" prefWidth="983.0" BorderPane.alignment="CENTER">
+              <items>
+                  <Button fx:id="buttonRetrieveData" mnemonicParsing="false" onAction="#handleRetrieveData" text="Retrieve" />
+                <Button fx:id="autoFillComboBoxCompany" mnemonicParsing="false" onAction="#handleSave" prefWidth="52.0" text="Save" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+                  <Button fx:id="buttonSearch" mnemonicParsing="false" text="Search" />
+              </items>
+            </ToolBar>
+         </top>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TitledPane animated="false" collapsible="false" layoutX="54.0" text="Employment Configuration" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="149.0" layoutY="29.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-10.0">
+                                 <children>
+                                    <AnchorPane prefHeight="212.0" prefWidth="1013.0" VBox.vgrow="NEVER">
+                                       <VBox.margin>
+                                          <Insets left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <GridPane>
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="117.00000762939453" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.9999923706055" minWidth="10.0" prefWidth="602.9999923706055" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Client:" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="Department:" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <AutoFillComboBox fx:id="autoFillComboBoxClient" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="608.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <AutoFillComboBox fx:id="autoFillComboBoxDepartment" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="Employee Name:" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="labelEmployeeName" maxWidth="1.7976931348623157E308" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="5.0" />
+                                                   </padding>
+                                                </Label>
+                                                <GridPane GridPane.columnIndex="1">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Pay From:">
+                                                         <font>
+                                                            <Font name="System Bold" size="13.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="Pay To:" GridPane.columnIndex="2">
+                                                         <font>
+                                                            <Font name="System Bold" size="13.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="45.0" />
+                                                         </GridPane.margin>
+                                                      </Label>
+                                                      <Label fx:id="labelPayFrom" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" GridPane.columnIndex="1">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets />
+                                                         </GridPane.margin>
+                                                         <padding>
+                                                            <Insets left="5.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelPayTo" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" GridPane.columnIndex="3">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets />
+                                                         </GridPane.margin>
+                                                         <padding>
+                                                            <Insets left="5.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </GridPane>
+                                                <FormattedDatePicker fx:id="formattedDatePickerDateRendered" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Date Rendered" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="checkBoxIsTransfer" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Label text="Whole Data" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="10.0" layoutY="76.0" text="Client Group:" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <AutoFillComboBox fx:id="autoFillComboBoxClientGroup" layoutX="128.0" layoutY="73.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="608.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="220.0" prefWidth="1023.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <TableView fx:id="tableViewEmploymentConfiguration" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                              <TableColumn fx:id="tableColumnClient" prefWidth="227.9999634027481" text="Client" />
+                                              <TableColumn fx:id="tableColumnDepartment" prefWidth="312.0" text="Department" />
+                                                <TableColumn fx:id="tableColumnPosition" prefWidth="194.0" text="Position" />
+                                                <TableColumn fx:id="tableColumnPayRate" prefWidth="91.0" text="Pay Rate" />
+                                                <TableColumn fx:id="tableColumnDaily" prefWidth="40.0" text="Daily" />
+                                                <TableColumn fx:id="tableColumnWorkingDays" prefWidth="93.0" text="Working Days" />
+                                                <TableColumn fx:id="tableColumnEmergencyCostOfLivingAllowance" prefWidth="52.0" text="ECOLA" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

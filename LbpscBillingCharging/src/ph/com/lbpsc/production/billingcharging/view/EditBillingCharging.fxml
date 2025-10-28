@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.formatteddatepicker.FormattedDatePicker?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="596.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lbpsc.production.billingcharging.view.EditBillingChargingController">
+   <children>
+      <BorderPane layoutX="58.0" layoutY="21.0" prefHeight="596.0" prefWidth="894.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="48.0" text="Save" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+              </items>
+            </ToolBar>
+         </top>
+         <center>
+            <AnchorPane prefHeight="333.0" prefWidth="441.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane layoutX="25.0" layoutY="14.0" prefHeight="359.0" prefWidth="460.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="424.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="117.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="682.0" minWidth="10.0" prefWidth="343.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Employee ID:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Employee Name:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelEmployeeCode" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelEmployeeName" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Department :" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Client :" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Date rendered :" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <FormattedDatePicker fx:id="formattedDatePickerDateRendered" prefHeight="25.0" prefWidth="123.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="Whole Data:" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="checkBoxTransfer" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="Client Group:" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="45.0" text="Position:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingPosition" layoutX="142.0" layoutY="43.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingClient" layoutX="142.0" layoutY="72.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingDepartment" layoutX="142.0" layoutY="101.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingClientGroup" layoutX="142.0" layoutY="130.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="150.0" text="Bill rate:" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="178.0" text="Bill rate overtime:" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingBillRate" layoutX="142.0" layoutY="148.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelChargingBillRateOvertime" layoutX="142.0" layoutY="175.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="263.0" text="Regular Days:" GridPane.rowIndex="10">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelPayrollRegularDays" layoutX="127.0" layoutY="204.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="291.0" text="Holiday:" GridPane.rowIndex="11">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelPayrollHoliday" layoutX="127.0" layoutY="288.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="319.0" text="Undertime:" GridPane.rowIndex="12">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelPayrollUndertime" layoutX="127.0" layoutY="316.0" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="183.0" style="-fx-border-color: #000000;" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                           <opaqueInsets>
+                              <Insets left="2.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <TitledPane fx:id="titledPaneRegular" collapsible="false" layoutX="35.0" layoutY="382.0" text="Regular">
+                     <content>
+                        <GridPane prefHeight="124.0" prefWidth="394.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.99999237060547" minWidth="10.0" prefWidth="133.99999237060547" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="40.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="39.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="40.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Holiday Pay" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Undertime" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Hrs" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Mins" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Days" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <ValidatedTextField fx:id="validatedTextFieldHoursOfUndertime" alignment="CENTER_RIGHT" layoutX="2.0" layoutY="1.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="74.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <children>
+                                    <ValidatedTextField fx:id="validatedTextFieldMinutesOfUndertime" alignment="CENTER_RIGHT" layoutX="3.0" layoutY="1.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="71.0" />
+                                 </children>
+                              </AnchorPane>
+                              <Label text="Regular Pay" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ValidatedTextField fx:id="validatedTextFieldNumberOfRegularDays" alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="25.0" prefWidth="75.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ValidatedTextField fx:id="validatedTextFieldNumberOfDaysOfHoliday" alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="25.0" prefWidth="75.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </TitledPane>
+                  <BorderPane layoutX="478.0" layoutY="14.0" prefHeight="258.0" prefWidth="398.0">
+                     <top>
+                        <ToolBar prefHeight="14.0" prefWidth="384.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <Label prefHeight="17.0" prefWidth="114.0" text="Payroll Overtime">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TableView fx:id="tableViewPayrollOvertime" prefHeight="164.0" prefWidth="395.0" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="tableColumnPayrollOTRate" prefWidth="108.0" text="Rate" />
+                              <TableColumn fx:id="tableColumnPayrollOTHrs" prefWidth="77.0" text="Hrs" />
+                              <TableColumn fx:id="tableColumnPayrollOTMins" prefWidth="69.0" text="Mins" />
+                              <TableColumn fx:id="tableColumnPayrollOTAmount" prefWidth="137.0" text="Amount" />
+                           </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+                  <BorderPane layoutX="476.0" layoutY="278.0" prefHeight="255.0" prefWidth="401.0">
+                     <top>
+                        <ToolBar prefHeight="14.0" prefWidth="384.0" BorderPane.alignment="CENTER">
+                          <items>
+                              <Label prefHeight="17.0" prefWidth="218.0" text="Cover Up / Extended Duty">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                            <Button fx:id="buttonAddCharging" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddCharging" prefHeight="25.0" prefWidth="52.0" text="Add" />
+                              <Button fx:id="buttonEdit" contentDisplay="CENTER" layoutX="288.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleEditCharging" prefHeight="25.0" prefWidth="52.0" text="Edit" />
+                              <Button fx:id="buttonDeleteCharging" contentDisplay="CENTER" layoutX="294.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteCharging" prefHeight="25.0" prefWidth="52.0" text="Delete" />
+                          </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TableView fx:id="tableViewExtendedDuty" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="tableColumnChargingOldRate" prefWidth="53.0" text="Old Rate" />
+                            <TableColumn fx:id="tableColumnChargingNewRate" prefWidth="54.0" text="Rate" />
+                              <TableColumn fx:id="tableColumnChargingCoverUp" prefWidth="62.0" text="Cover Up" />
+                              <TableColumn fx:id="tableColumnChargingExtendedDuty" prefWidth="95.0" text="Extended Duty" />
+                              <TableColumn fx:id="tableColumnChargingHrs" prefWidth="37.0" text="Hrs" />
+                              <TableColumn fx:id="tableColumnChargingMins" prefWidth="38.0" text="Mins" />
+                              <TableColumn fx:id="tableColumnChargingAmount" prefWidth="59.0" text="Amount" />
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

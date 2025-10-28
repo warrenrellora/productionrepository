@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC '-//mybatis.org//DTD Config 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-config.dtd'>
+<configuration>
+	<properties
+		resource='ph/com/lbpsc/production/billingcharging/resources/jdbc.properties' />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias
+			type='ph.com.lbpsc.production.billingcharging.model.BillingCharging'
+			alias='BillingCharging'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.overtimetype.model.OvertimeType'
+			alias='OvertimeType'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.client.model.Client' alias='Client'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.company.model.Company' alias='Company'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.clientgroup.model.ClientGroup'
+			alias='ClientGroup'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.user.model.User'
+			alias='User'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employee.model.Employee'
+			alias='Employee'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmenthistory.model.EmploymentHistory'
+			alias='EmploymentHistory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.region.model.Region' alias='Region'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.gender.model.Gender' alias='Gender'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.civilstatus.model.CivilStatus'
+			alias='CivilStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.taxstatus.model.TaxStatus'
+			alias='TaxStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.department.model.Department'
+			alias='Department'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.position.model.Position'
+			alias='Position'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.positioncategory.model.PositionCategory'
+			alias='PositionCategory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.appointmentstatus.model.AppointmentStatus'
+			alias='AppointmentStatus'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.payroll.model.Payroll' alias='Payroll'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.billing.model.Billing' alias='Billing'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrolltype.model.PayrollType'
+			alias='PayrollType'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrollheader.model.PayrollHeader'
+			alias='PayrollHeader'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.allowance.model.Allowance'
+			alias='Allowance'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.allowancetype.model.AllowanceType'
+			alias='AllowanceType'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrollemploymentconfiguration.model.PayrollEmploymentConfiguration'
+			alias='PayrollEmploymentConfiguration'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.ssssubsidiaryledger.model.SSSSubsidiaryLedger'
+			alias='SSSSubsidiaryLedger'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.sssavailment.model.SSSAvailment'
+			alias='SSSAvailment'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.pagibigsubsidiaryledger.model.PagibigSubsidiaryLedger'
+			alias='PagibigSubsidiaryLedger'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.pagibigavailment.model.PagibigAvailment'
+			alias='PagibigAvailment'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.hmodeduction.model.HmoDeduction'
+			alias='HmoDeduction'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.hmoavailment.model.HmoAvailment'
+			alias='HmoAvailment'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.cashadvancesubsidiaryledger.model.CashAdvanceSubsidiaryLedger'
+			alias='CashAdvanceSubsidiaryLedger'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.cashadvanceavailment.model.CashAdvanceAvailment'
+			alias='CashAdvanceAvailment'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrollstatusdetails.model.PayrollStatusDetails'
+			alias='PayrollStatusDetails'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrollstatus.model.PayrollStatus'
+			alias='PayrollStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.miscellaneousadjustmentdetails.model.MiscellaneousAdjustmentDetails'
+			alias='MiscellaneousAdjustmentDetails'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.miscellaneousadjustment.model.MiscellaneousAdjustment'
+			alias='MiscellaneousAdjustment'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.miscellaneousadjustmenttype.model.MiscellaneousAdjustmentType'
+			alias='MiscellaneousAdjustmentType'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.postaudit.model.PostAudit'
+			alias='PostAudit'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.postauditpayroll.model.PostAuditPayroll'
+			alias='PostAuditPayroll'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.overtime.model.Overtime'
+			alias='Overtime'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmentconfiguration.model.EmploymentConfiguration'
+			alias='EmploymentConfiguration'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.loantype.model.LoanType'
+			alias='LoanType'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.loan.model.Loan'
+			alias='Loan'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.billingrate.model.BillingRate'
+			alias='BillingRate'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.billingratedetails.model.BillingRateDetails'
+			alias='BillingRateDetails'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.billingratedetailsreference.model.BillingRateDetailsReference'
+			alias='BillingRateDetailsReference'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.billingratedetailstype.model.BillingRateDetailsType'
+			alias='BillingRateDetailsType'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.overtimeprevious.model.OvertimePrevious'
+			alias='OvertimePrevious'></typeAlias>
+
+		<typeAlias
+			type='ph.com.lbpsc.production.statementofaccount.model.StatementOfAccount'
+			alias='StatementOfAccount'></typeAlias>
+
+	</typeAliases>
+	<environments default='production'>
+		<environment id='production'>
+			<transactionManager type='JDBC' />
+			<dataSource type='POOLED'>
+				<property name='poolMaximumActiveConnections' value='2' />
+				<property name='poolMaximumIdleConnections' value='2' />
+				<property name='driver' value='${jdbc.driverClassName}' />
+				<property name='url'
+					value='jdbc:mysql://${jdbc.host}/${jdbc.schemaName}?useCompression=true' />
+				<property name='username' value='${jdbc.username}' />
+				<property name='password' value='${jdbc.password}' />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper
+			resource='ph/com/lbpsc/production/billingcharging/data/mapper/BillingChargingMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/overtimetype/data/mapper/OvertimeTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/client/data/mapper/ClientMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/company/data/mapper/CompanyMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/clientgroup/data/mapper/ClientGroupMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/user/data/mapper/UserMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employee/data/mapper/EmployeeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmenthistory/data/mapper/EmploymentHistoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/region/data/mapper/RegionMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/gender/data/mapper/GenderMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/civilstatus/data/mapper/CivilStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/taxstatus/data/mapper/TaxStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/department/data/mapper/DepartmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/position/data/mapper/PositionMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/positioncategory/data/mapper/PositionCategoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/appointmentstatus/data/mapper/AppointmentStatusMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/payroll/data/mapper/PayrollMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/billing/data/mapper/BillingMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrolltype/data/mapper/PayrollTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrollheader/data/mapper/PayrollHeaderMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/allowance/data/mapper/PayrollAllowanceMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/allowancetype/data/mapper/AllowanceTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrollemploymentconfiguration/data/mapper/PayrollEmploymentConfigurationMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/ssssubsidiaryledger/data/mapper/SSSSubsidiaryLedgerMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/sssavailment/data/mapper/SSSAvailmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/pagibigsubsidiaryledger/data/mapper/PagibigSubsidiaryLedgerMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/pagibigavailment/data/mapper/PagibigAvailmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/hmodeduction/data/mapper/HmoDeductionMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/hmoavailment/data/mapper/HmoAvailmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/cashadvancesubsidiaryledger/data/mapper/CashAdvanceSubsidiaryLedgerMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/cashadvanceavailment/data/mapper/CashAdvanceAvailmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrollstatusdetails/data/mapper/PayrollStatusDetailsMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrollstatus/data/mapper/PayrollStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/miscellaneousadjustmentdetails/data/mapper/MiscellaneousAdjustmentDetailsMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/miscellaneousadjustment/data/mapper/MiscellaneousAdjustmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/miscellaneousadjustmenttype/data/mapper/MiscellaneousAdjustmentTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/postaudit/data/mapper/PostAuditMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/postauditpayroll/data/mapper/PostAuditPayrollMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/overtime/data/mapper/BillingOvertimeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmentconfiguration/data/mapper/EmploymentConfigurationMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/overtime/data/mapper/PayrollOvertimeMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/loantype/data/mapper/LoanTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/loan/data/mapper/LoanMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/billingrate/data/mapper/BillingRateMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/billingratedetails/data/mapper/BillingRateDetailsMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/billingratedetailsreference/data/mapper/BillingRateDetailsReferenceMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/billingratedetailstype/data/mapper/BillingRateDetailsTypeMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/overtime/data/mapper/BillingChargingOvertimeMapper.xml' />
+
+		<mapper
+			resource='ph/com/lbpsc/production/overtimeprevious/data/mapper/OvertimePreviousMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/statementofaccount/data/mapper/StatementOfAccountMapper.xml' />
+	</mappers>
+</configuration>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lbpsc.production.billingcharging.data.mapper.BillingChargingMapper">
+	<resultMap type='BillingCharging' id='BillingChargingResult'>
+		<id property='primaryKey' column='PRIKEY' />
+		<result property='daily' column='DAILY' />
+		<result property='payFrom' column='PAY_FROM' />
+		<result property='payTo' column='PAY_TO' />
+		<result property='batchDate' column='BATCH_DATE' />
+		<result property='regularDays' column='REGULAR_DAYS' />
+		<result property='undertimeHours' column='UNDERTIME_HOURS' />
+		<result property='undertimeMinutes' column='UNDERTIME_MINUTES' />
+		<result property='holidays' column='HOLIDAYS' />
+		<result property='total' column='TOTAL' />
+		<result property='dateRendered' column='DATE_RENDERED' />
+		<result property="isTransfer" column="TRANSFER" />
+		<result property="remarks" column="REMARKS" />
+		<result property='changedInComputer' column='TERMINAL_ID' />
+		<result property='changedOnDate' column='DATE_UPDATED' />
+
+		<association property='employmentConfiguration'
+			column='PRIKEY_CONFIGURATION_EMPLOYMENT'
+			select='ph.com.lbpsc.production.employmentconfiguration.data.mapper.EmploymentConfigurationMapper.getEmploymentConfigurationById' />
+
+		<association property='billingRate'
+			column='PRIKEY_BILLING_RATE'
+			select='ph.com.lbpsc.production.billingrate.data.mapper.BillingRateMapper.getBillingRateById' />
+
+		<association property='billingRateOvertime'
+			column='PRIKEY_BILLING_RATE_OT'
+			select='ph.com.lbpsc.production.billingrate.data.mapper.BillingRateMapper.getBillingRateById' />
+
+		<association property='client' column='CLIENT_CD'
+			javaType='Client' jdbcType='VARCHAR' notNullColumn='comp_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+		<association property='department' column='DEPT_NO'
+			notNullColumn='dept_no'
+			select='ph.com.lbpsc.production.department.data.mapper.DepartmentMapper.getDepartmentByCode' />
+
+		<association property='user' column='PRIKEY_USER'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='payroll' column='PRIKEY_PAYROLL'
+			select='ph.com.lbpsc.production.payroll.data.mapper.PayrollMapper.getPayrollById' />
+
+		<association property='billing' column='PRIKEY_BILLING'
+			select='ph.com.lbpsc.production.billing.data.mapper.BillingMapper.getBillingRegisterById' />
+
+		<association property='clientGroup' column='PRIKEY_GROUP'
+			select='ph.com.lbpsc.production.clientgroup.data.mapper.ClientGroupMapper.getClientGroupByKey' />
+
+		<association property='statementOfAccount'
+			column='PRIKEY_SOA'
+			select='ph.com.lbpsc.production.statementofaccount.data.mapper.StatementOfAccountMapper.getStatementOfAccountByKey' />
+
+		<association property='statementOfAccountOvertime'
+			column='PRIKEY_SOA_OT'
+			select='ph.com.lbpsc.production.statementofaccount.data.mapper.StatementOfAccountMapper.getStatementOfAccountByKey' />
+
+		<association property='employee' column='emp_id'
+			select='ph.com.lbpsc.production.employee.data.mapper.EmployeeMapper.getEmployeeById' />
+
+		<collection property='overtimeList' javaType='ArrayList'
+			column="PRIKEY" notNullColumn="PRIKEY" ofType='Overtime'
+			select='ph.com.lbpsc.production.overtime.data.mapper.BillingChargingOvertimeMapper.getBillingChargingOvertimeByBillingChargingPrikey' />
+	</resultMap>
+
+	<select id='getAllBillingCharging'
+		resultMap='BillingChargingResult'>
+		SELECT * FROM
+		billing_charging
+	</select>
+
+	<select id="getBillingChargingById" parameterType='Integer'
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging WHERE PRIKEY = #{primaryKey}
+	</select>
+
+	<select id="getBillingChargingByBatchDate"
+		resultMap="BillingChargingResult">
+		SELECT *
+		FROM billing_charging where batch_date = #{0}
+	</select>
+
+	<select id="getBillingChargingByClientAndBatchDate"
+		resultMap="BillingChargingResult">
+		select * from billing_charging where client_cd=#{0} and
+		batch_date=#{1}
+	</select>
+
+	<select id="getAllBillingChargingByPayroll"
+		parameterType='Payroll' resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging WHERE
+		PRIKEY_PAYROLL=#{primaryKey};
+	</select>
+
+	<insert id='createBillingCharging'
+		parameterType='BillingCharging' useGeneratedKeys='true'
+		keyProperty='primaryKey'>
+		INSERT INTO billing_charging
+		(EMP_ID,PRIKEY_CONFIGURATION_EMPLOYMENT,CLIENT_CD,
+		DEPT_NO,PRIKEY_GROUP,
+		PRIKEY_BILLING_RATE, PRIKEY_BILLING_RATE_OT,
+		PRIKEY_SOA, PRIKEY_SOA_OT, DAILY,
+		PAY_FROM,
+		PAY_TO, BATCH_DATE,
+		REGULAR_DAYS,
+		UNDERTIME_HOURS,
+		UNDERTIME_MINUTES,
+		HOLIDAYS,
+		PRIKEY_PAYROLL,
+		PRIKEY_BILLING, REMARKS,TRANSFER,
+		DATE_RENDERED,
+		TERMINAL_ID,
+		DATE_UPDATED,
+		PRIKEY_USER)
+		VALUES
+		(#{employee.employeeCode},#{employmentConfiguration.primaryKey},#{client.clientCode},
+		#{department.departmentCode},#{clientGroup.primaryKey},
+		#{billingRate.primaryKey}, #{billingRateOvertime.primaryKey},
+		#{statementOfAccount.primaryKey},
+		#{statementOfAccountOvertime.primaryKey},
+		#{daily},
+		#{payFrom},
+		#{payTo},
+		#{batchDate}, #{regularDays},
+		#{undertimeHours},
+		#{undertimeMinutes},
+		#{holidays},
+		#{payroll.primaryKey},
+		#{billing.primaryKey}, #{remarks}
+		,#{isTransfer},#{dateRendered},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey})
+	</insert>
+
+	<update id='updateBillingCharging'
+		parameterType='BillingCharging'>
+		UPDATE
+		billing_charging
+		set
+		EMP_ID=#{employee.employeeCode},
+		PRIKEY_CONFIGURATION_EMPLOYMENT =
+		#{employmentConfiguration.primaryKey},
+		CLIENT_CD =
+		#{client.clientCode},
+		DEPT_NO =
+		#{department.departmentCode},PRIKEY_GROUP =#{clientGroup.primaryKey},
+		PRIKEY_BILLING_RATE
+		=#{billingRate.primaryKey},
+		PRIKEY_BILLING_RATE_OT
+		=#{billingRateOvertime.primaryKey},
+		PRIKEY_SOA
+		=#{statementOfAccount.primaryKey},
+		PRIKEY_SOA_OT
+		=#{statementOfAccountOvertime.primaryKey},
+		DAILY =
+		#{daily},
+		PAY_FROM =
+		#{payFrom},
+		PAY_TO =
+		#{payTo},
+		BATCH_DATE =
+		#{batchDate},
+		REGULAR_DAYS
+		=#{regularDays},
+		UNDERTIME_HOURS =
+		#{undertimeHours},
+		UNDERTIME_MINUTES =
+		#{undertimeMinutes},
+		HOLIDAYS =
+		#{holidays},
+		PRIKEY_PAYROLL=#{payroll.primaryKey},
+		PRIKEY_BILLING=#{billing.primaryKey},
+		REMARKS =#{remarks},TRANSFER =#{isTransfer},
+		DATE_RENDERED = #{dateRendered},
+		TERMINAL_ID =
+		#{changedInComputer},
+		DATE_UPDATED = #{changedOnDate},
+		PRIKEY_USER =
+		#{user.primaryKey}
+		where
+		PRIKEY = #{primaryKey}
+	</update>
+
+	<delete id='deleteBillingCharging'
+		parameterType='BillingCharging'>
+		DELETE FROM
+		billing_charging WHERE PRIKEY = #{primaryKey}
+	</delete>
+
+	<select id="getAllPendingBillingChargingByClient"
+		resultMap="BillingChargingResult">
+		select a.* from billing_charging a left join billing_register b on
+		a.PRIKEY_PAYROLL=b.PRIKEY
+		left join pe_salary_history c on
+		b.PRIKEY_EMPLOYMENT_HISTORY=c.prikey
+		where a.CLIENT_CD in
+		<foreach item='client' index='index' collection='listClient'
+			open="(" separator="," close=")">
+			#{client.clientCode}
+		</foreach>
+		and b.PRIKEY_CHARGING is null;
+	</select>
+
+	<select id="getAllBillingChargingByClientGroupAndBatchDate"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a WHERE a.PRIKEY_GROUP = #{0}
+		AND a.BATCH_DATE = #{1};
+	</select>
+
+	<select id="getAllBillingChargingByClientAndBatchDate"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a WHERE a.CLIENT_CD = #{0}
+		AND a.BATCH_DATE = #{1};
+	</select>
+
+	<select
+		id="getAllBillingChargingByClientOrClientGroupAndBatchDate"
+		resultMap="BillingChargingResult">
+		SELECT a.*
+		FROM billing_charging a
+		LEFT JOIN payroll_register b ON
+		a.PRIKEY_PAYROLL = b.PRIKEY
+		LEFT JOIN pe_salary_history c ON
+		b.PRIKEY_EMPLOYMENT_HISTORY = c.prikey
+		LEFT JOIN payroll_header d ON
+		b.PRIKEY_HEADER = d.PRIKEY
+		<where>
+			<choose>
+				<when test="client != null">
+					c.CLIENT_CD = #{client.clientCode}
+				</when>
+				<otherwise>
+					a.PRIKEY_GROUP = #{clientGroup.primaryKey}
+				</otherwise>
+			</choose>
+			AND d.PAY_FROM = #{batchDate}
+
+		</where>
+	</select>
+
+	<select id="getBillingChargingByClientCodeAndPayFrom"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a
+		LEFT JOIN
+		billing_register b
+		ON a.PRIKEY_PAYROLL = b.PRIKEY_PAYROLL
+		LEFT JOIN
+		configuration_employment c ON c.PRIKEY =
+		a.PRIKEY_CONFIGURATION_EMPLOYMENT
+		LEFT JOIN payroll_register d ON
+		a.PRIKEY_PAYROLL = d.PRIKEY
+		LEFT JOIN pe_salary_history e ON
+		d.PRIKEY_EMPLOYMENT_HISTORY = e.prikey
+		LEFT JOIN pe_personnel f ON
+		e.EMP_ID = f.EMP_ID
+		WHERE a.CLIENT_CD =#{0} AND a.PAY_FROM
+		IN(#{1},#{2});
+	</select>
+
+	<select id="getAllBillingChargingByPayrollPrikey"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a WHERE
+		a.PRIKEY_PAYROLL=#{0};
+	</select>
+
+	<select
+		id="getAllExtendedDutyBillingChargingByClientCdBatchDate"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a
+		LEFT JOIN
+		billing_charging_overtime b ON a.PRIKEY =
+		b.PRIKEY_BILLING_CHARGING
+		WHERE a.BATCH_DATE =#{0} AND a.CLIENT_CD =#{1} AND
+		b.IS_EXTENDED_DUTY =
+		1;
+	</select>
+
+	<select id="getAllPendingBillingChargingByClientBatchDate"
+		resultMap="BillingChargingResult">
+		select a.* from billing_charging a left join billing_register b on
+		a.PRIKEY_PAYROLL=b.PRIKEY_PAYROLL
+		left join pe_salary_history c on
+		b.PRIKEY_EMPLOYMENT_HISTORY=c.prikey
+		where a.CLIENT_CD in
+		<foreach item='client' index='index' collection='listClient'
+			open="(" separator="," close=")">
+			#{client.clientCode}
+		</foreach>
+		and a.BATCH_DATE=#{batchDate} and b.PRIKEY_CHARGING is null;
+	</select>
+
+	<select
+		id="getAllBillingChargingBatchDateClientOrGroupCoverUpOrExtendedDuty"
+		resultMap="BillingChargingResult">
+		SELECT * FROM billing_charging a
+		LEFT JOIN billing_charging_overtime b
+		ON a.PRIKEY = b.PRIKEY_BILLING_CHARGING
+		<where>
+			a.BATCH_DATE=#{batchDate}
+			<if test="client != null">
+				AND a.CLIENT_CD=#{client.clientCode}
+			</if>
+			<if test="clientGroup != null">
+				AND a.PRIKEY_GROUP=#{clientGroup.primaryKey}
+			</if>
+			<if test="isExtendedDuty != null">
+				AND b.IS_EXTENDED_DUTY=#{isExtendedDuty}
+			</if>
+		</where>
+	</select>
+
+</mapper>

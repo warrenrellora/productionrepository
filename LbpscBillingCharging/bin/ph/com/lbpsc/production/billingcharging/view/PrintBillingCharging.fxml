@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.formatteddatepicker.FormattedDatePicker?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lbpsc.production.billingcharging.view.PrintBillingChargingController">
+   <children>
+      <BorderPane layoutX="6.0" layoutY="6.0" prefHeight="517.0" prefWidth="807.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="6.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="buttonOk" mnemonicParsing="false" onAction="#handlePrint" prefHeight="25.0" prefWidth="52.0" text="Ok" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="52.0" text="Cancel" />
+              </items>
+            </ToolBar>
+         </top>
+         <center>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="801.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane layoutX="162.0" prefHeight="172.0" prefWidth="801.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <GridPane prefHeight="139.0" prefWidth="801.0" BorderPane.alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="338.0" minWidth="10.0" prefWidth="118.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.0" minWidth="10.0" prefWidth="270.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="39.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="342.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="34.0" minHeight="-Infinity" prefHeight="29.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="41.0" minHeight="-Infinity" prefHeight="31.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="31.0" minHeight="-Infinity" prefHeight="28.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Client:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Pay from:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <FormattedDatePicker fx:id="formattedDatePickerPayPeriodFrom" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Pay to:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <FormattedDatePicker fx:id="formattedDatePickerPayPeriodTo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <Label text="Certified Correct By:" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <AutoFillComboBox fx:id="autoFillComboBoxCertifiedCorrect" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                              <Label text="Approved By:" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <AutoFillComboBox fx:id="autoFillComboBoxApprovedBy" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                              <Label text="Client Group:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelClient" prefHeight="26.0" prefWidth="827.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+                              <Label fx:id="labelClientGroup" layoutX="128.0" layoutY="12.0" prefHeight="26.0" prefWidth="827.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </center>
+                     <top>
+                        <ToolBar prefHeight="19.0" prefWidth="801.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <Label text="Billing Charging">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </items>
+                        </ToolBar>
+                     </top>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <HBox prefHeight="302.0" prefWidth="402.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="226.0" prefWidth="402.0">
+                     <children>
+                        <BorderPane layoutX="117.0" layoutY="-20.0" prefHeight="200.0" prefWidth="408.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <ToolBar prefHeight="35.0" prefWidth="401.0" BorderPane.alignment="CENTER">
+                                 <items>
+                                    <Label text="Statement of Account">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </items>
+                              </ToolBar>
+                           </top>
+                           <center>
+                              <GridPane BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="102.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="300.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="189.0" minHeight="10.0" prefHeight="189.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TableView fx:id="tableViewSOA" prefHeight="168.0" prefWidth="408.0" GridPane.columnSpan="2">
+                                      <columns>
+                                        <TableColumn fx:id="tableColumnSOA" prefWidth="118.0" text="SOA Code" />
+                                        <TableColumn fx:id="tableColumnClient" prefWidth="111.0" text="Client" />
+                                          <TableColumn fx:id="tableColumnDepartment" prefWidth="88.0" text="Department" />
+                                          <TableColumn fx:id="tableColumnAmountDue" prefWidth="83.0" text="Amount Due" />
+                                      </columns>
+                                    </TableView>
+                                    <Label text="BIR no,:" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Checked By:" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Approved By:" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <AutoFillComboBox fx:id="autoFillComboBoxCheckedBySOA" prefHeight="25.0" prefWidth="517.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <AutoFillComboBox fx:id="autoFillComboBoxApprovedBySOA" prefHeight="25.0" prefWidth="517.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <ValidatedTextField fx:id="textFieldBIRNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="226.0" prefWidth="402.0">
+                     <children>
+                        <BorderPane layoutX="117.0" layoutY="-20.0" prefHeight="200.0" prefWidth="408.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <ToolBar prefHeight="13.0" prefWidth="408.0" BorderPane.alignment="CENTER">
+                                 <items>
+                                    <Label prefHeight="17.0" prefWidth="320.0" text="Statement of Account Overtime">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="buttonRetrieveSOAOT" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#handleRetrieveOvertimeSOA" text="Retrieve" />
+                                 </items>
+                              </ToolBar>
+                           </top>
+                           <center>
+                              <GridPane BorderPane.alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="102.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="300.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="189.0" minHeight="10.0" prefHeight="189.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <TableView fx:id="tableViewSOAOT" prefHeight="168.0" prefWidth="408.0" GridPane.columnSpan="2">
+                                       <columns>
+                                          <TableColumn fx:id="tableColumnSOAOT" prefWidth="118.0" text="SOA Code" />
+                                          <TableColumn fx:id="tableColumnClientSOAOT" prefWidth="111.0" text="Client" />
+                                          <TableColumn fx:id="tableColumnDepartmentSOAOT" prefWidth="88.0" text="Department" />
+                                          <TableColumn fx:id="tableColumnAmountDueSOAOT" prefWidth="87.0" text="Amount Due" />
+                                       </columns>
+                                    </TableView>
+                                    <Label text="BIR no,:" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Checked By:" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Approved By:" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <AutoFillComboBox fx:id="autoFillComboBoxCheckedBySOAOT" prefHeight="25.0" prefWidth="517.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <AutoFillComboBox fx:id="autoFillComboBoxApprovedBySOAOT" prefHeight="25.0" prefWidth="517.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <ValidatedTextField fx:id="textFieldBIRNoSOAOT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+</AnchorPane>
