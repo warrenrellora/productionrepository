@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+
+<AnchorPane prefHeight="771.0" prefWidth="1293.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lserv.production.employeescheduleencoding.view.BrowseEmployeeScheduleEncodingController">
+   <children>
+      <BorderPane layoutX="64.0" layoutY="-59.0" prefHeight="771.0" prefWidth="1293.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="35.0" prefWidth="1550.0" BorderPane.alignment="CENTER">
+              <items>
+                  <Button fx:id="buttonRetrieve" mnemonicParsing="false" onAction="#handleRetrieve" prefHeight="25.0" prefWidth="60.0" text="Retrieve" />
+                  <MenuButton fx:id="menuButtonAdd" mnemonicParsing="false" prefHeight="25.0" prefWidth="151.0" text="Add/Change Schedule">
+                    <items>
+                      <MenuItem fx:id="menuItemRegular" mnemonicParsing="false" onAction="#handleRegular" text="Regular Schedule" />
+                      <MenuItem fx:id="menuItemIrregular" mnemonicParsing="false" onAction="#handleIrregular" text="Irregular Schedule" />
+                        <MenuItem fx:id="menuItemOvertime" mnemonicParsing="false" onAction="#handleOvertime" text="Regular Overtime Schedule" />
+                        <MenuItem fx:id="menuItemOvertimeIrregular" mnemonicParsing="false" onAction="#handleOvertimeIrregular" text="Irregular Overtime Schedule" />
+                    </items>
+                  </MenuButton>
+                  <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="52.0" text="Delete" />
+                  <Button fx:id="buttonSearch" mnemonicParsing="false" onAction="#handleSearch" prefHeight="25.0" prefWidth="52.0" text="Search" />
+              </items>
+            </ToolBar>
+         </top>
+         <left>
+            <GridPane prefHeight="736.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="-Infinity" prefWidth="79.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" prefWidth="270.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="608.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Client:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <AutoFillComboBox fx:id="comboBoxClient" prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </AutoFillComboBox>
+                  <AutoFillComboBox fx:id="comboBoxDepartment" prefHeight="25.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </AutoFillComboBox>
+                  <TableView fx:id="tableViewEmployee" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="673.0" prefWidth="187.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                    <columns>
+                        <TableColumn fx:id="tableColumnEmployeeCheckbox" prefWidth="33.0" />
+                      <TableColumn fx:id="tableColumnEmployeeId" prefWidth="83.0" text="Employee ID" />
+                      <TableColumn fx:id="tableColumnEmployeeName" prefWidth="226.0" text="Employee Name" />
+                    </columns>
+                  </TableView>
+                  <Label text="Department:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets left="5.0" right="5.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="3.0" left="3.0" right="3.0" />
+               </padding>
+            </GridPane>
+         </left>
+         <center>
+            <AnchorPane BorderPane.alignment="CENTER">
+               <children>
+                  <TitledPane fx:id="titledPaneRegularSchedule" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="310.0" prefWidth="579.0" text="Regular Schedule">
+                     <content>
+                        <TableView fx:id="tableViewRegular" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="284.0" prefWidth="570.0">
+                          <columns>
+                            <TableColumn fx:id="tableColumnRegularDay" prefWidth="94.0" text="Day" />
+                            <TableColumn fx:id="tableColumnRegularTimeIn" prefWidth="75.0" text="Time in" />
+                              <TableColumn fx:id="tableColumnRegularLunchOut" prefWidth="70.0" text="Lunch out" />
+                              <TableColumn fx:id="tableColumnRegularLunchIn" prefWidth="75.0" text="Lunch in" />
+                              <TableColumn fx:id="tableColumnRegularTimeOut" prefWidth="78.0" text="Time out" />
+                              <TableColumn fx:id="tableColumnRegularTotalMin" maxWidth="166.0" prefWidth="88.0" text="Total min/day" />
+                              <TableColumn fx:id="tableColumnRegularOffset" maxWidth="180.0" prefWidth="95.0" text="Offset allowed" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </TitledPane>
+                  <TitledPane animated="false" collapsible="false" layoutY="312.0" maxHeight="1.7976931348623157E308" prefHeight="310.0" prefWidth="0.0" text="Irregular Schedule">
+                     <content>
+                        <TableView fx:id="tableViewIrregular" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="284.0" prefWidth="578.0">
+                          <columns>
+                              <TableColumn fx:id="tableColumnIrregularCheckBox" prefWidth="31.0" />
+                              <TableColumn fx:id="tableColumnIrregularDate" prefWidth="86.0" text="Date" />
+                            <TableColumn fx:id="tableColumnIrregularTimeIn" prefWidth="64.0" text="Time in" />
+                              <TableColumn fx:id="tableColumnIrregularLunchOut" prefWidth="73.0" text="Lunch out" />
+                              <TableColumn fx:id="tableColumnIrregularLunchIn" prefWidth="73.0" text="Lunch in" />
+                              <TableColumn fx:id="tableColumnIrregularTimeOut" prefWidth="73.0" text="Time out" />
+                              <TableColumn fx:id="tableColumnIrregularTotalMinPerDay" maxWidth="142.0" prefWidth="87.0" text="Total min/day" />
+                              <TableColumn fx:id="tableColumnIrregularOffset" maxWidth="140.0" prefWidth="88.0" text="Offset allowed" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </TitledPane>
+                  <TitledPane animated="false" collapsible="false" layoutX="580.0" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="310.0" prefWidth="361.0" text="Regular Overtime Schedule">
+                     <content>
+                        <TableView fx:id="tableViewOvertime" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="273.0" prefWidth="352.0">
+                          <columns>
+                            <TableColumn fx:id="tableColumnOTName" prefWidth="128.0" text="Name" />
+                            <TableColumn fx:id="tableColumnOTStart" minWidth="4.0" prefWidth="119.0" text="Time start" />
+                              <TableColumn fx:id="tableColumnOTEnd" prefWidth="111.0" text="Time end" />
+                          </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </TitledPane>
+                  <TitledPane animated="false" collapsible="false" layoutX="581.0" layoutY="312.0" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="310.0" prefWidth="360.0" text="Irregular Overtime Schedule">
+                     <content>
+                        <TableView fx:id="tableViewOvertimeIrregular" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="242.0" prefWidth="299.0">
+                           <columns>
+                              <TableColumn fx:id="tableColumnOTNameIrregular" prefWidth="132.0" text="Name" />
+                              <TableColumn fx:id="tableColumnOTStartIrregular" minWidth="4.0" prefWidth="119.0" text="Time start" />
+                              <TableColumn fx:id="tableColumnOTEndIrregular" prefWidth="113.0" text="Time end" />
+                           </columns>
+                        </TableView>
+                     </content>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.employeescheduleencoding.data.mapper.EmployeeScheduleEncodingMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='EmployeeScheduleEncoding'
+		id='EmployeeScheduleEncodingResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+
+		<association property='employmentHistory' column='emp_id'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getMaxEmploymentHistory' />
+
+		<association property='scheduleEncodingReference'
+			column='prikey_reference_client'
+			select='ph.com.lserv.production.scheduleencodingreference.data.mapper.ScheduleEncodingReferenceMapper.getDataById' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='EmployeeScheduleEncoding'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		employee_schedule_encoding(
+		emp_id,
+		prikey_reference_client,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES (
+		#{employmentHistory.employee.employeeCode},
+		#{scheduleEncodingReference.primaryKeyReference},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		)
+	</insert>
+
+	<insert id='createMultipleData' useGeneratedKeys='true'>
+		INSERT INTO
+		employee_schedule_encoding(
+		emp_id,
+		prikey_reference_client,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES
+		<foreach collection="selectedEmployeesToBeSaveList"
+			item="EmployeeScheduleEncoding" separator=",">
+			(
+			#{EmployeeScheduleEncoding.employmentHistory.employee.employeeCode},
+			#{EmployeeScheduleEncoding.scheduleEncodingReference.primaryKeyReference},
+			#{EmployeeScheduleEncoding.changedInComputer},
+			#{EmployeeScheduleEncoding.changedOnDate},
+			#{EmployeeScheduleEncoding.user.primaryKey}
+			)
+		</foreach>
+	</insert>
+
+	<update id='updateData' parameterType='EmployeeScheduleEncoding'>
+		UPDATE
+		employee_schedule_encoding
+		SET
+		emp_id=#{employmentHistory.employee.employeeCode},
+		prikey_reference_client=#{scheduleEncodingReference.primaryKeyReference},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey =
+		#{primaryKey}
+
+	</update>
+
+	<delete id='deleteData' parameterType='EmployeeScheduleEncoding'>
+		DELETE FROM
+		employee_schedule_encoding
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData"
+		resultMap="EmployeeScheduleEncodingResult">
+		SELECT * FROM
+		employee_schedule_encoding;
+	</select>
+
+	<select id="getEmployeeScheduleByEmployeeID"
+		resultMap="EmployeeScheduleEncodingResult">
+		SELECT * FROM employee_schedule_encoding WHERE emp_id = #{0};
+	</select>
+
+	<select id="getAllEmployeeScheduleByPrikeyReferenceClient"
+		resultMap="EmployeeScheduleEncodingResult">
+		SELECT * FROM employee_schedule_encoding WHERE
+		prikey_reference_client = #{0};
+	</select>
+
+</mapper>

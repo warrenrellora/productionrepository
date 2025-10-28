@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.employeescheduleuploadingovertimebreakdown.data.mapper.EmployeeScheduleUploadingOvertimeBreakdownMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='EmployeeScheduleUploadingOvertimeBreakdown'
+		id='EmployeeScheduleUploadingOvertimeBreakdownResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+		<id property='totalMin' column='total_min' />
+		<id property='allowedOvertime' column='allowed_overtime' />
+		<id property='overtimeIn' column='overtime_in' />
+		<id property='payFrom' column='pay_from' />
+		<id property='payTo' column='pay_to' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='employmentHistory' column='emp_id'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getMaxEmploymentHistory' />
+
+		<association property='employeeScheduleUploading'
+			column='prikey_employee_schedule_uploading'
+			select='ph.com.lserv.production.employeescheduleuploading.data.mapper.EmployeeScheduleUploadingMapper.getDataById' />
+
+		<association property='employeeScheduleEncodingOvertime'
+			column='prikey_employee_overtime_schedule_encoding'
+			select='ph.com.lserv.production.employeescheduleencodingovertime.data.mapper.EmployeeScheduleEncodingOvertimeMapper.getDataById' />
+
+		<association property='overtimeType'
+			column='prikey_reference_overtime'
+			select='ph.com.lbpsc.production.overtimetype.data.mapper.OvertimeTypeMapper.getOvertimeTypeById' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+		<association property="department" column="dept_no"
+			select="ph.com.lbpsc.production.department.data.mapper.DepartmentMapper.getDepartmentByCode" />
+
+		<association property="overtimeFiling"
+			column="prikey_overtime_filing"
+			select="ph.com.lserv.production.overtimefiling.data.mapper.OvertimeFilingMapper.getDataById" />
+
+		<association property='overtimeFilingClient'
+			column='prikey_overtime_filing_client'
+			select='ph.com.lserv.production.overtimefilingclient.data.mapper.OvertimeFilingClientMapper.getDataById' />
+
+		<association property="earlyOvertimeFiling"
+			column="prikey_early_overtime_filing"
+			select="ph.com.lserv.production.overtimefiling.data.mapper.OvertimeFilingMapper.getDataById" />
+
+		<association property='earlyOvertimeFilingClient'
+			column='prikey_early_overtime_filing_client'
+			select='ph.com.lserv.production.overtimefilingclient.data.mapper.OvertimeFilingClientMapper.getDataById' />
+
+		<!-- <association property='scheduleEncodingReference' column='prikey_reference_client' 
+			select='ph.com.lserv.production.scheduleencodingreference.data.mapper.ScheduleEncodingReferenceMapper.getDataById' 
+			/> -->
+
+	</resultMap>
+
+	<insert id='createData'
+		parameterType='EmployeeScheduleUploadingOvertimeBreakdown'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		employee_schedule_uploading_ot_breakdown(
+		emp_id,
+		client_cd,
+		dept_no,
+		prikey_employee_schedule_uploading,
+		prikey_employee_overtime_schedule_encoding,
+		prikey_overtime_filing,
+		prikey_early_overtime_filing,
+		prikey_overtime_filing_client,
+		prikey_early_overtime_filing_client,
+		prikey_reference_overtime,
+		total_min,
+		pay_from,
+		pay_to,
+		allowed_overtime,
+		prikey_user,
+		terminal_id,
+		date_updated
+		)
+		VALUES(
+		#{employmentHistory.employee.employeeCode},
+		#{client.clientCode},
+		#{department.departmentCode},
+		#{employeeScheduleUploading.primaryKey},
+		#{employeeScheduleEncodingOvertime.primaryKey},
+		#{overtimeFiling.primaryKey},
+		#{earlyOvertimeFiling.primaryKey},
+		#{overtimeFilingClient.primaryKey},
+		#{earlyOvertimeFilingClient.primaryKey},
+		#{overtimeType.primaryKey},
+		#{totalMin},
+		#{payFrom},
+		#{payTo},
+		#{allowedOvertime},
+		#{user.primaryKey},
+		#{changedInComputer},
+		#{changedOnDate}
+		)
+
+	</insert>
+
+	<update id='updateData'
+		parameterType='EmployeeScheduleUploadingOvertimeBreakdown'>
+		UPDATE employee_schedule_uploading_ot_breakdown
+		SET
+		emp_id=#{employmentHistory.employee.employeeCode},
+		client_cd=#{client.clientCode},
+		dept_no=#{department.departmentCode},
+		prikey_employee_schedule_uploading=#{employeeScheduleUploading.primaryKey},
+		prikey_employee_overtime_schedule_encoding=#{employeeScheduleEncodingOvertime.primaryKey},
+		prikey_overtime_filing=#{overtimeFiling.primaryKey},
+		prikey_early_overtime_filing=#{earlyOvertimeFiling.primaryKey},
+		prikey_overtime_filing_client=#{overtimeFilingClient.primaryKey},
+		prikey_early_overtime_filing_client=#{earlyOvertimeFilingClient.primaryKey},
+		prikey_reference_overtime=#{overtimeType.primaryKey},
+		total_min=#{totalMin},
+		pay_from=#{payFrom},
+		pay_to=#{payTo},
+		allowed_overtime=#{allowedOvertime},
+		prikey_user=#{user.primaryKey},
+		terminal_id=#{changedInComputer},
+		date_updated=#{changedOnDate}
+		WHERE
+		prikey=#{primaryKey}
+	</update>
+
+	<delete id="deleteData"
+		parameterType='EmployeeScheduleUploadingOvertimeBreakdown'>
+		DELETE FROM employee_schedule_uploading_ot_breakdown
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData"
+		resultMap="EmployeeScheduleUploadingOvertimeBreakdownResult">
+		SELECT * FROM employee_schedule_uploading_ot_breakdown;
+	</select>
+
+	<select id="getDataById"
+		resultMap="EmployeeScheduleUploadingOvertimeBreakdownResult">
+		SELECT * FROM employee_schedule_uploading_ot_breakdown WHERE
+		prikey=#{primaryKey}
+	</select>
+
+	<select id="getDataByPrikeyEmployeeScheduleUploading"
+		resultMap="EmployeeScheduleUploadingOvertimeBreakdownResult">
+		SELECT * FROM employee_schedule_uploading_ot_breakdown a
+		WHERE
+		a.prikey_employee_schedule_uploading=#{0};
+	</select>
+
+	<select id="getAllOvertimeTypeDistinctByPayFromPayToClientCd"
+		resultType="int">
+		SELECT DISTINCT(a.prikey_reference_overtime) FROM
+		employee_schedule_uploading_ot_breakdown a
+		WHERE a.pay_from =#{0} AND
+		a.pay_to =#{1} and a.client_cd =#{2};
+	</select>
+
+	<select id="getAllPrikeyUploadingDistinctByPayFromPayTo"
+		resultType="int">
+		SELECT DISTINCT(a.prikey_employee_schedule_uploading) FROM
+		employee_schedule_uploading_ot_breakdown a WHERE a.pay_from =#{0} AND
+		a.pay_to =#{1];
+	</select>
+
+	<select id="getAllDataByEmployeeCodePayFromPayTo"
+		resultMap="EmployeeScheduleUploadingOvertimeBreakdownResult">
+		SELECT a.* FROM employee_schedule_uploading_ot_breakdown a
+		LEFT JOIN employee_schedule_uploading b ON
+		a.prikey_employee_schedule_uploading = b.prikey
+		WHERE a.emp_id =#{0} AND a.pay_from =#{1} AND 
+		a.pay_to =#{2} AND b.prikey IS NOT NULL;
+	</select>
+
+</mapper>

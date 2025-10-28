@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.employeescheduleencodingirregular.data.mapper.EmployeeScheduleEncodingIrregularMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='EmployeeScheduleEncodingIrregular'
+		id='EmployeeScheduleEncodingIrregularResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+		<id property='dateSchedule' column='date_schedule' />
+		<id property='timeIn' column='time_in' />
+		<id property='timeOut' column='time_out' />
+		<id property='lunchIn' column='lunch_in' />
+		<id property='lunchOut' column='lunch_out' />
+		<id property='offsetAllowed' column='offset_allowed' />
+		<id property='totalMinPerDay' column='total_min_per_day' />
+		<id property='isBreakExempted' column='is_break_exempted' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='employmentHistory' column='emp_id'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getMaxEmploymentHistory' />
+
+	</resultMap>
+
+	<insert id='createData'
+		parameterType='EmployeeScheduleEncodingIrregular'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		employee_irregular_schedule_encoding(
+		emp_id,
+		date_schedule,
+		time_in,
+		time_out,
+		lunch_in,
+		lunch_out,
+		is_break_exempted,
+		offset_allowed,
+		total_min_per_day,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES (
+		#{employmentHistory.employee.employeeCode},
+		#{dateSchedule},
+		#{timeIn},
+		#{timeOut},
+		#{lunchIn},
+		#{lunchOut},
+		#{isBreakExempted},
+		#{offsetAllowed},
+		#{totalMinPerDay},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		)
+	</insert>
+
+	<insert id="createMultipleData" useGeneratedKeys='true'>
+		INSERT INTO employee_irregular_schedule_encoding(
+		emp_id,
+		date_schedule,
+		time_in,
+		time_out,
+		lunch_in,
+		lunch_out,
+		is_break_exempted,
+		offset_allowed,
+		total_min_per_day,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES
+		<foreach collection="createdObjectsToBeSavedList"
+			item="EmployeeScheduleEncodingIrregular" separator=",">
+			(
+			#{EmployeeScheduleEncodingIrregular.employmentHistory.employee.employeeCode},
+			#{EmployeeScheduleEncodingIrregular.dateSchedule},
+			#{EmployeeScheduleEncodingIrregular.timeIn},
+			#{EmployeeScheduleEncodingIrregular.timeOut},
+			#{EmployeeScheduleEncodingIrregular.lunchIn},
+			#{EmployeeScheduleEncodingIrregular.lunchOut},
+			#{EmployeeScheduleEncodingIrregular.isBreakExempted},
+			#{EmployeeScheduleEncodingIrregular.offsetAllowed},
+			#{EmployeeScheduleEncodingIrregular.totalMinPerDay},
+			#{EmployeeScheduleEncodingIrregular.changedInComputer},
+			#{EmployeeScheduleEncodingIrregular.changedOnDate},
+			#{EmployeeScheduleEncodingIrregular.user.primaryKey}
+			)
+		</foreach>
+	</insert>
+
+	<update id='updateData'
+		parameterType='EmployeeScheduleEncodingIrregular'>
+		UPDATE
+		employee_irregular_schedule_encoding
+		SET
+		emp_id=#{employmentHistory.employee.employeeCode},
+		date_schedule=#{dateSchedule},
+		time_in=#{timeIn},
+		time_out=#{timeOut},
+		lunch_in=#{lunchIn},
+		lunch_out=#{lunchOut},
+		is_break_exempted=#{isBreakExempted},
+		offset_allowed=#{offsetAllowed},
+		total_min_per_day=#{totalMinPerDay},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey =
+		#{primaryKey}
+
+	</update>
+
+	<delete id='deleteData'
+		parameterType='EmployeeScheduleEncodingIrregular'>
+		DELETE FROM
+		employee_irregular_schedule_encoding
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData"
+		resultMap="EmployeeScheduleEncodingIrregularResult">
+		SELECT * FROM
+		employee_irregular_schedule_encoding;
+	</select>
+
+	<select id="getAllEmployeeIrregularScheduleByEmployeeID"
+		resultMap="EmployeeScheduleEncodingIrregularResult">
+		SELECT * FROM employee_irregular_schedule_encoding a WHERE
+		a.emp_id =#{0};
+	</select>
+
+	<select id="getEmployeeIrregularScheduleByPrikey"
+		resultMap="EmployeeScheduleEncodingIrregularResult">
+		SELECT * FROM employee_irregular_schedule_encoding a WHERE
+		a.prikey =#{0};
+	</select>
+
+	<select id="getEmployeeIrregularScheduleByDateAndEmployeeID"
+		resultMap="EmployeeScheduleEncodingIrregularResult">
+		SELECT * FROM employee_irregular_schedule_encoding a WHERE
+		a.date_schedule =
+		#{dateSchedule} AND a.emp_id =#{1};
+	</select>
+
+</mapper>

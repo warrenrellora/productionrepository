@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.holidayencoding.data.mapper.HolidayEncodingMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='HolidayEncoding' id='HolidayEncodingResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='date' column='holiday_date' />
+		<id property='description' column='holiday_desc' />
+		<id property='fixed' column='holiday_fixed' />
+		<id property='overrideDate' column='override_date' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+		<id property='clientCode' column='client_cd' />
+
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='holidayTypeReference'
+			column='holiday_type'
+			select='ph.com.lserv.production.holidaytypereference.data.mapper.HolidayTypeReferenceMapper.getHolidayTypeReferenceByPrikey' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='HolidayEncoding'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO holiday_encoding(
+		client_cd,
+		holiday_date,
+		holiday_type,
+		holiday_desc,
+		holiday_fixed,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES (
+		#{clientCode},
+		#{date},
+		#{holidayTypeReference.primaryKey},
+		#{description},
+		#{fixed},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		)
+
+	</insert>
+
+	<update id='updateData' parameterType='HolidayEncoding'>
+		UPDATE holiday_encoding
+		SET
+		client_cd=#{clientCode},
+		holiday_date=#{date},
+		holiday_type=#{holidayTypeReference.primaryKey},
+		holiday_desc=#{description},
+		holiday_fixed=#{fixed},
+		override_date =
+		#{overrideDate},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey =
+		#{primaryKey}
+
+	</update>
+
+	<delete id='deleteData' parameterType='HolidayEncoding'>
+		DELETE FROM
+		holiday_encoding
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData" resultMap="HolidayEncodingResult">
+		SELECT * FROM
+		holiday_encoding;
+	</select>
+
+	<select id="getHolidayByPrikeyUser"
+		resultMap="HolidayEncodingResult">
+		SELECT * from holiday_encoding WHERE prikey_user = #{0};
+	</select>
+
+	<select id="getAllHolidayByClientName"
+		resultMap="HolidayEncodingResult">
+		SELECT a.* FROM holiday_encoding a WHERE a.client_cd =#{0};
+	</select>
+
+	<select id="getAllHolidayRegular"
+		resultMap="HolidayEncodingResult">
+		SELECT * FROM holiday_encoding a WHERE a.client_cd IS NULL
+		ORDER BY a.holiday_date ASC;
+	</select>
+
+	<select id="getHolidayByPrikey"
+		resultMap="HolidayEncodingResult">
+		SELECT * FROM holiday_encoding a WHERE a.prikey = #{0};
+	</select>
+
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane prefHeight="689.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lserv.production.employeescheduleencodingirregular.view.EditEmployeeScheduleEncodingIrregularController">
+   <children>
+      <BorderPane layoutX="143.0" layoutY="77.0" prefHeight="689.0" prefWidth="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <items>
+                  <Button fx:id="buttonSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="52.0" text="Cancel" />
+               </items>
+            </ToolBar>
+         </top>
+         <right>
+            <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" prefHeight="654.0" prefWidth="469.0" text="Irregular Schedule" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+               <content>
+                  <GridPane prefHeight="628.0" prefWidth="447.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="116.0" minWidth="5.0" prefWidth="111.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="119.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="140.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="51.0" minHeight="-Infinity" prefHeight="51.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="595.0" minHeight="10.000005722045898" prefHeight="410.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <AutoFillComboBox fx:id="comboBoxMonth" prefHeight="25.0" prefWidth="688.0" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+                        <AutoFillComboBox fx:id="comboBoxYear" prefHeight="25.0" prefWidth="688.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="checkBoxBreakExempted" mnemonicParsing="false" text="Lunch / Break Audit Exempted" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <Label text="Time in:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Time out:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ValidatedTextField fx:id="textFieldTimeIn" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ValidatedTextField fx:id="textFieldLunchOut" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <ValidatedTextField fx:id="textFieldLunchIn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ValidatedTextField fx:id="textFieldTimeOut" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Label text="Lunch in:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="64.0" text="Lunch out:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Offset Allowed:" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <ValidatedTextField fx:id="textFieldOffset" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+                        <Label text="Total min. per day:" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <ValidatedTextField fx:id="textFieldTotalMin" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                        <TableView fx:id="tableViewDates" maxHeight="1.7976931348623157E308" prefHeight="393.0" prefWidth="428.0" GridPane.columnSpan="4" GridPane.rowIndex="7">
+                           <columns>
+                              <TableColumn fx:id="tableColumnDatesCheckbox" minWidth="0.0" prefWidth="32.000001549720764" />
+                              <TableColumn fx:id="tableColumnDates" prefWidth="397.0" text="Dates" />
+                           </columns>
+                        </TableView>
+                        <Label text="Month: ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Year:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="3.0" right="3.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </TitledPane>
+         </right>
+         <left>
+            <TitledPane animated="false" collapsible="false" prefHeight="654.0" prefWidth="341.0" text="Selected employee/s" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+               <content>
+                  <TableView fx:id="tableViewEmployee" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tableColumnEmployeeId" prefWidth="108.0" text="Employee ID" />
+                      <TableColumn fx:id="tableColumnEmployeeName" prefWidth="231.0" text="Employee Name" />
+                    </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+         </left>
+      </BorderPane>
+   </children>
+</AnchorPane>

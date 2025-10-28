@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.autofillcombobox.AutoFillComboBox?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane prefHeight="463.0" prefWidth="947.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lserv.production.holidayencoding.view.BrowseHolidayEncodingController">
+   <children>
+      <BorderPane prefHeight="405.0" prefWidth="767.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="buttonCollect" mnemonicParsing="false" onAction="#handleCollect" prefHeight="25.0" prefWidth="66.0" text="Collect" />
+                  <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#handleAdd" prefHeight="25.0" prefWidth="52.0" text="Add" />
+                  <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#handleEdit" prefHeight="25.0" prefWidth="52.0" text="Edit" />
+                  <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="52.0" text="Delete" />
+              </items>
+            </ToolBar>
+         </top>
+         <left>
+            <GridPane fx:id="gridPaneOvertime" prefHeight="428.0" prefWidth="453.0" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="54.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="0.0" prefWidth="2.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="0.0" prefWidth="401.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="-Infinity" minHeight="33.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="386.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <TableView fx:id="tableViewHoliday" prefHeight="395.0" prefWidth="374.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+                     <columns>
+                        <TableColumn fx:id="tableColumnDate" prefWidth="120.0" text="Date" />
+                        <TableColumn fx:id="tableColumnDescription" minWidth="0.0" prefWidth="330.0" text="Description" />
+                     </columns>
+                  </TableView>
+                  <Label text="Client:">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <AutoFillComboBox fx:id="comboBoxClient" prefHeight="25.0" prefWidth="418.0" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+         </left>
+         <center>
+            <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="151.0" prefWidth="437.0" text="Holiday Details" BorderPane.alignment="TOP_LEFT">
+               <content>
+                  <GridPane maxHeight="-Infinity" prefHeight="115.0" prefWidth="437.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="-Infinity" prefWidth="118.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" prefWidth="455.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ValidatedTextField fx:id="textFieldDate" GridPane.columnIndex="1" />
+                        <Label text="Date: ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Description: " GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ValidatedTextField fx:id="textFieldDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Fixed Holiday Date:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Type:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ValidatedTextField fx:id="textFieldFixed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ValidatedTextField fx:id="textFieldType" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </content>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="5.0" top="5.0" />
+               </BorderPane.margin>
+            </TitledPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

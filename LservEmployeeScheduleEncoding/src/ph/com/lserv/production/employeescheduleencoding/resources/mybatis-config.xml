@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+PUBLIC '-//mybatis.org//DTD Config 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-config.dtd'>
+<configuration>
+	<properties
+		resource='ph/com/lserv/production/employeescheduleencoding/resources/jdbc.properties' />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmenthistory.model.EmploymentHistory'
+			alias='EmploymentHistory'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.scheduleencoding.model.ScheduleEncoding'
+			alias='ScheduleEncoding'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employee.model.Employee'
+			alias='Employee'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleencoding.model.EmployeeScheduleEncoding'
+			alias='EmployeeScheduleEncoding'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.holidaytypereference.model.HolidayTypeReference'
+			alias='HolidayTypeReference'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.user.model.User'
+			alias='User'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.client.model.Client' alias='Client'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.company.model.Company' alias='Company'></typeAlias>
+	</typeAliases>
+	<environments default='development'>
+		<environment id='development'>
+			<transactionManager type='JDBC' />
+			<dataSource type='POOLED'>
+				<property name='driver' value='${jdbc.driverClassName}' />
+				<property name='url'
+					value='jdbc:mysql://${jdbc.host}/${jdbc.schemaName}?useCompression=true' />
+				<property name='username' value='${jdbc.username}' />
+				<property name='password' value='${jdbc.password}' />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper
+			resource='ph/com/lserv/production/scheduleencoding/data/mapper/ScheduleEncodingMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmenthistory/data/mapper/EmploymentHistoryMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleencoding/data/mapper/EmployeeScheduleEncodingMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/holidaytypereference/data/mapper/HolidayTypeReferenceMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/user/data/mapper/UserMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/client/data/mapper/ClientMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/company/data/mapper/CompanyMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employee/data/mapper/EmployeeMapper.xml' />
+	</mappers>
+</configuration>
