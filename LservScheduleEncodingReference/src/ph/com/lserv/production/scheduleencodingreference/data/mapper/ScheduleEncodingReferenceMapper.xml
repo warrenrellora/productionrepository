@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.scheduleencodingreference.data.mapper.ScheduleEncodingReferenceMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='ScheduleEncodingReference' id='ScheduleEncodingReferenceResult'>
+
+		<id property='primaryKeyReference' column='prikey' />
+		<id property='scheduleName' column='schedule_cd' />
+		<id property='overrideDate' column='override_date' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='ScheduleEncodingReference'
+		useGeneratedKeys='true' keyProperty='primaryKeyReference'>
+		INSERT INTO reference_client_schedule(
+		client_cd,
+		schedule_cd,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES (
+		#{client.clientCode},
+		#{scheduleName},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		)
+
+	</insert>
+
+	<update id='updateData' parameterType='ScheduleEncodingReference'>
+		UPDATE reference_client_schedule
+		SET
+		client_cd=#{clientCode},
+		schedule_cd=#{scheduleName},
+		override_date =
+		#{overrideDate},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey_reference =
+		#{primaryKeyReference}
+
+	</update>
+
+	<delete id='deleteData' parameterType='ScheduleEncodingReference'>
+		DELETE FROM
+		reference_client_schedule
+		WHERE
+		prikey=#{primaryKeyReference}
+	</delete>
+	
+	<delete id='deleteDataByPrikeyReferenceClient' parameterType='ScheduleEncodingReference'>
+		DELETE FROM reference_client_schedule WHERE prikey = #{0};
+	</delete>
+
+	<select id="getAllData" resultMap="ScheduleEncodingReferenceResult">
+		SELECT * FROM
+		reference_client_schedule;
+	</select>
+	
+	<select id="getDataById" resultMap="ScheduleEncodingReferenceResult">
+		SELECT * FROM reference_client_schedule WHERE prikey = #{0};
+	</select>
+	
+	<select id="getScheduleByScheduleNameAndClientCode"  resultMap="ScheduleEncodingReferenceResult">
+		SELECT * FROM reference_client_schedule WHERE schedule_cd = #{0} AND client_cd = #{client.clientCode};
+	</select>
+	
+	<select id="getAllScheduleByClientCode" resultMap="ScheduleEncodingReferenceResult">
+	SELECT * FROM reference_client_schedule a WHERE a.client_cd = #{client.clientCode};
+	</select>
+
+</mapper>
