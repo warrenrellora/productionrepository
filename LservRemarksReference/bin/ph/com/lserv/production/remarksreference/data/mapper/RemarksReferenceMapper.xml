@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.remarksreference.data.mapper.RemarksReferenceMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='RemarksReference'
+		id='RemarksReferenceResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='remarks' column='remarks' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='RemarksReference'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		reference_remarks_schedule(
+		remarks,
+		prikey_user,
+		terminal_id,
+		date_updated
+		)
+		VALUES(
+		#{remarks},
+		#{user.primaryKey},
+		#{changedInComputer},
+		#{changedOnDate}
+		)
+
+	</insert>
+
+	<update id='updateData' parameterType='RemarksReference'>
+		UPDATE
+		reference_remarks_schedule
+		SET
+		remarks=#{remarks},
+		prikey_user=#{user.primaryKey},
+		terminal_id=#{changedInComputer},
+		date_updated=#{changedOnDate}
+		WHERE
+		prikey=#{primaryKey}
+	</update>
+
+	<delete id="deleteData" parameterType='RemarksReference'>
+		DELETE FROM
+		reference_remarks_schedule
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData" resultMap="RemarksReferenceResult">
+		SELECT * FROM
+		reference_remarks_schedule;
+	</select>
+
+	<select id="getDataById" resultMap="RemarksReferenceResult">
+		SELECT * FROM
+		reference_remarks_schedule WHERE
+		prikey=#{primaryKey}
+	</select>
+
+</mapper>

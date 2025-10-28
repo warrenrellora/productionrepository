@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.overtimefiling.data.mapper.OvertimeFilingMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='OvertimeFiling' id='OvertimeFilingResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<result property='dateTimeFrom' column='datetime_from' />
+		<result property='dateTimeTo' column='datetime_to' />
+		<result property='workDone' column='work_done' />
+		<result property='dateFiled' column='date_filed' />
+		<result property='totalOtHours' column='total_ot_hours' />
+		<result property='changedInComputer' column='terminal_id' />
+		<result property='changedOnDate' column='date_updated' />
+		<result property='bypassDateTimeTo' column='bypass_datetime_to' />
+		<result property='isExceeded' column='is_exceeded' />
+		<result property='prikeyTrail' column='prikey_trail' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='timeConfigFoxPro'
+			column='prikey_user'
+			select='ph.com.lserv.production.timeconfigfoxpro.data.mapper.TimeConfigFoxProMapper.getTimeConfigByPrikeyUser' />
+
+	</resultMap>
+
+
+	<insert id='createData' parameterType='OvertimeFiling'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		overtime_filing(
+		datetime_from,
+		datetime_to,
+		work_done,
+		total_ot_hours,
+		date_filed,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES(
+		#{dateTimeFrom},
+		#{dateTimeTo},
+		#{workDone},
+		#{totalOtHours},
+		#{dateFiled},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		);
+	</insert>
+
+	<update id='updateData' parameterType='OvertimeFiling'>
+		UPDATE overtime_filing SET
+		datetime_from=#{dateTimeFrom},
+		datetime_to=#{dateTimeTo},
+		work_done=#{workDone},
+		total_ot_hours
+		=#{totalOtHours},
+		date_filed
+		=#{dateFiled},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE prikey =
+		#{primaryKey}
+	</update>
+
+	<delete id='deleteData' parameterType='OvertimeFiling'>
+		DELETE FROM
+		overtime_filing
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData" resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing;
+	</select>
+
+	<select id="getDataById" resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing
+		where
+		prikey= #{primaryKey};
+	</select>
+
+	<select id="getUserData" resultMap="OvertimeFilingResult"
+		flushCache="true">
+		SELECT * FROM overtime_filing
+		where
+		prikey_user =
+		#{prikeyUser};
+	</select>
+
+	<select id="getMaxFiledOvertime"
+		resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing WHERE prikey =
+		(SELECT
+		MAX(prikey) FROM overtime_filing);
+	</select>
+
+	<select id="getAllOvertimeSortedAscending"
+		resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing ORDER BY datetime_from ASC;
+	</select>
+
+	<select id="getOvertimeByCutoffDate"
+		resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing a WHERE datetime_from AND
+		datetime_to BETWEEN
+		#{0} AND #{1};
+	</select>
+
+	<select id="getAllOvertimeByOvertimeFromAndPrikeyUser"
+		resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing a WHERE a.prikey_user = #{1} AND a.datetime_from LIKE #{0} ORDER BY a.datetime_to;
+	</select>
+	
+	<select id="getAllOvertimeByOvertimeToAndPrikeyUser"
+		resultMap="OvertimeFilingResult">
+		SELECT * FROM overtime_filing a WHERE a.prikey_user = #{1} AND a.datetime_to LIKE #{0} ORDER BY a.datetime_to;
+	</select>
+	
+</mapper>

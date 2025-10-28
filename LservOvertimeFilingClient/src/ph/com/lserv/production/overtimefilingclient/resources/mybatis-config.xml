@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+PUBLIC '-//mybatis.org//DTD Config 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-config.dtd'>
+<configuration>
+	<properties
+		resource='ph/com/lserv/production/employeescheduleuploadingovertimebreakdown/resources/jdbc.properties' />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias
+			type='ph.com.lbpsc.production.overtimetype.model.OvertimeType'
+			alias='OvertimeType'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.overtimefiling.model.OvertimeFiling'
+			alias='OvertimeFiling'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleencodingovertime.model.EmployeeScheduleEncodingOvertime'
+			alias='EmployeeScheduleEncodingOvertime'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmenthistory.model.EmploymentHistory'
+			alias='EmploymentHistory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employee.model.Employee'
+			alias='Employee'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleuploadingovertimebreakdown.model.EmployeeScheduleUploadingOvertimeBreakdown'
+			alias='EmployeeScheduleUploadingOvertimeBreakdown'></typeAlias>
+		<typeAlias
+			type='ph.com.lserv.production.employeescheduleuploading.model.EmployeeScheduleUploading'
+			alias='EmployeeScheduleUploading'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.client.model.Client' alias='Client'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.user.model.User'
+			alias='User'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.company.model.Company' alias='Company'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.department.model.Department'
+			alias='Department'></typeAlias>
+	</typeAliases>
+	<environments default='development'>
+		<environment id='development'>
+			<transactionManager type='JDBC' />
+			<dataSource type='POOLED'>
+				<property name='driver' value='${jdbc.driverClassName}' />
+				<property name='url'
+					value='jdbc:mysql://${jdbc.host}/${jdbc.schemaName}?useCompression=true' />
+				<property name='username' value='${jdbc.username}' />
+				<property name='password' value='${jdbc.password}' />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper
+			resource='ph/com/lbpsc/production/overtimetype/data/mapper/OvertimeTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleencodingovertime/data/mapper/EmployeeScheduleEncodingOvertimeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmenthistory/data/mapper/EmploymentHistoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employee/data/mapper/EmployeeMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleuploadingovertimebreakdown/data/mapper/EmployeeScheduleUploadingOvertimeBreakdownMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/employeescheduleuploading/data/mapper/EmployeeScheduleUploadingMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/user/data/mapper/UserMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/company/data/mapper/CompanyMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/client/data/mapper/ClientMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/department/data/mapper/DepartmentMapper.xml' />
+		<mapper
+			resource='ph/com/lserv/production/overtimefiling/data/mapper/OvertimeFilingMapper.xml' />
+	</mappers>
+</configuration>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.holidayencodingtrail.data.mapper.HolidayEncodingTrailMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='HolidayEncodingTrail'
+		id='HolidayEncodingTrailResult'>
+
+		<id property='primaryKeyTrail' column='prikey_trail' />
+		<id property='primaryKey' column='prikey_holiday_encoding' />
+	<!-- 	<id property='overrideDate' column='override_date' /> -->
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='recordProcedure' column='rp_cd'
+			notNullColumn='rp_cd'
+			select='ph.com.lbpsc.production.recordprocedure.data.mapper.RecordProcedureMapper.getRecordProcedureByKey' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='HolidayEncodingTrail'
+		useGeneratedKeys='true' keyProperty='primaryKeyTrail'>
+		INSERT INTO holiday_encoding_trail(
+		client_cd,
+		holiday_date,
+		holiday_type,
+		holiday_desc,
+		holiday_fixed,
+		terminal_id,
+		date_updated,
+		prikey_user,
+		prikey_holiday_encoding,
+		rp_cd,
+		override_date
+		)
+		VALUES (
+		#{clientCode},
+		#{date},
+		#{holidayTypeReference.primaryKey},
+		#{description},
+		#{fixed},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey},
+		#{primaryKey},
+		#{recordProcedure.recordProcedureCode},
+		#{overrideDate}
+		)
+	</insert>
+
+	<update id='updateData' parameterType='HolidayEncodingTrail'>
+		UPDATE holiday_encoding_trail
+		SET
+		client_cd=#{clientCode},
+		holiday_date=#{date},
+		holiday_type=#{holidayTypeReference.primaryKey},
+		holiday_desc=#{description},
+		holiday_fixed=#{fixed},
+		override_date =
+		#{overrideDate},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey},
+		prikey_holiday_encoding =#{primaryKey},
+		rp_cd =#{recordProcedure.recordProcedureCode}
+		WHERE
+		prikey_trail =
+		#{primaryKeyTrail}
+	</update>
+
+	<delete id='deleteData' parameterType='HolidayEncodingTrail'>
+		DELETE FROM
+		holiday_encoding_trail
+		WHERE
+		prikey_trail=#{primaryKeyTrail}
+	</delete>
+
+	<select id="getAllData" resultMap="HolidayEncodingTrailResult">
+		SELECT * FROM
+		holiday_encoding_trail;
+	</select>
+
+</mapper>

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.scheduleencoding.data.mapper.ScheduleEncodingMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='ScheduleEncoding'
+		id='ScheduleEncodingResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<id property='scheduleDay' column='schedule_day' />
+		<id property='timeIn' column='time_in' />
+		<id property='timeOut' column='time_out' />
+		<id property='changedInComputer' column='terminal_id' />
+		<id property='changedOnDate' column='date_updated' />
+		<id property='clientCode' column='client_cd' />
+		<id property='lunchIn' column='lunch_in' />
+		<id property='lunchOut' column='lunch_out' />
+		<id property='offsetAllowed' column='offset_allowed' />
+		<id property='scheduleName' column='schedule_cd' />
+		<id property='totalMinPerDay' column='total_min_per_day' />
+		<id property='isBreakExempted' column='is_break_exempted' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='employee' column='emp_id'
+			select='ph.com.lbpsc.production.employee.data.mapper.EmployeeMapper.getEmployeeById' />
+
+		<association property='scheduleEncodingReference'
+			column='prikey_reference_client'
+			select='ph.com.lserv.production.scheduleencodingreference.data.mapper.ScheduleEncodingReferenceMapper.getDataById' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+	</resultMap>
+
+	<insert id='createData' parameterType='ScheduleEncoding'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		reference_schedule_encoding(
+		prikey_reference_client,
+		emp_id,
+		schedule_day,
+		time_in,
+		time_out,
+		lunch_in,
+		lunch_out,
+		offset_allowed,
+		is_break_exempted,
+		total_min_per_day,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES (
+		#{scheduleEncodingReference.primaryKeyReference},
+		#{employee.employeeCode},
+		#{scheduleDay},
+		#{timeIn},
+		#{timeOut},
+		#{lunchIn},
+		#{lunchOut},
+		#{offsetAllowed},
+		#{isBreakExempted},
+		#{totalMinPerDay},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		)
+
+	</insert>
+
+	<insert id="createMultipleData" useGeneratedKeys='true'>
+		INSERT INTO reference_schedule_encoding(
+		prikey_reference_client,
+		emp_id,
+		schedule_day,
+		time_in,
+		time_out,
+		lunch_in,
+		lunch_out,
+		offset_allowed,
+		is_break_exempted,
+		total_min_per_day,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES
+		<foreach collection="scheduleEncodingToSave"
+			item="ScheduleEncoding" separator=",">
+			(
+			#{ScheduleEncoding.scheduleEncodingReference.primaryKeyReference},
+			#{ScheduleEncoding.employee.employeeCode},
+			#{ScheduleEncoding.scheduleDay},
+			#{ScheduleEncoding.timeIn},
+			#{ScheduleEncoding.timeOut},
+			#{ScheduleEncoding.lunchIn},
+			#{ScheduleEncoding.lunchOut},
+			#{ScheduleEncoding.offsetAllowed},
+			#{ScheduleEncoding.isBreakExempted},
+			#{ScheduleEncoding.totalMinPerDay},
+			#{ScheduleEncoding.changedInComputer},
+			#{ScheduleEncoding.changedOnDate},
+			#{ScheduleEncoding.user.primaryKey}
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateMultipleData" parameterType='ScheduleEncoding'>
+		<!-- BEGIN <foreach collection="objectToModifySelectedObjectList" item="ScheduleEncoding" 
+			separator=","> UPDATE schedule_encoding <set> schedule_cd=#{ScheduleEncoding.scheduleName}, 
+			schedule_day=#{ScheduleEncoding.scheduleDay}, time_in=#{ScheduleEncoding.timeIn}, 
+			time_out=#{ScheduleEncoding.timeOut}, terminal_id = #{ScheduleEncoding.changedInComputer}, 
+			date_updated = #{ScheduleEncoding.changedOnDate}, prikey_user =#{ScheduleEncoding.user.primaryKey} 
+			</set> WHERE prikey = #{ScheduleEncoding.primaryKey} </foreach> ;END; -->
+	</update>
+
+	<update id='updateData' parameterType='ScheduleEncoding'>
+		UPDATE
+		reference_schedule_encoding
+		SET
+		time_in=#{timeIn},
+		time_out=#{timeOut},
+		lunch_in=#{lunchIn},
+		lunch_out=#{lunchOut},
+		offset_allowed
+		=#{offsetAllowed},
+		is_break_exempted=#{isBreakExempted},
+		total_min_per_day=#{totalMinPerDay},
+		emp_id=#{employee.employeeCode},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey =
+		#{primaryKey}
+	</update>
+
+	<delete id="deleteData" parameterType='ScheduleEncoding'>
+		DELETE FROM
+		reference_schedule_encoding WHERE prikey=#{primaryKey};
+	</delete>
+
+	<delete id='deleteDataByClientNameAndSchedName'
+		parameterType='ScheduleEncoding'>
+		DELETE FROM
+		reference_schedule_encoding
+		WHERE
+		schedule_cd=#{1} AND client_cd = (SELECT COMP_CD FROM
+		ft_company_reference WHERE COMP_NAME = #{0});
+	</delete>
+
+	<delete id='deleteDataByClientNameAndSchedNameAndDay'
+		parameterType='ScheduleEncoding'>
+		DELETE FROM reference_schedule_encoding WHERE
+		schedule_cd = #{0} AND schedule_day = #{1}
+		AND client_cd = (SELECT
+		COMP_CD FROM ft_company_reference WHERE COMP_NAME = #{2});
+	</delete>
+
+	<delete id='deleteDataByPrikeyReferenceClient'
+		parameterType='ScheduleEncoding'>
+		DELETE FROM reference_schedule_encoding WHERE
+		prikey_reference_client = #{0};
+	</delete>
+
+	<delete id='deleteDataByPrikeyReferenceClientAndSchedDay'
+		parameterType='ScheduleEncoding'>
+		DELETE FROM reference_schedule_encoding WHERE
+		prikey_reference_client = #{0} AND schedule_day = #{1};
+	</delete>
+
+	<select id="getAllData" resultMap="ScheduleEncodingResult">
+		SELECT * FROM
+		reference_schedule_encoding;
+	</select>
+
+	<select id="getDataById" resultMap="ScheduleEncodingResult">
+		SELECT * FROM
+		reference_schedule_encoding WHERE prikey =#{primaryKey};
+	</select>
+
+	<select id="getSchedBySchedNameAndDay"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE
+		a.schedule_cd =#{0} AND
+		a.schedule_day =#{1};
+	</select>
+
+	<select id="getAllDistinctScheduleEncodingByClientName"
+		resultMap="ScheduleEncodingResult">
+		SELECT DISTINCT(a.schedule_cd) FROM
+		reference_schedule_encoding a
+		LEFT JOIN
+		ft_company_reference b
+		ON
+		b.COMP_NAME =#{0}
+		WHERE a.client_cd = b.COMP_CD;
+	</select>
+
+	<select id="getAllScheduleEncodingByEncodingName"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE
+		a.schedule_cd=#{0};
+	</select>
+
+	<select id="getAllScheduleEncodingByClientName"
+		resultMap="ScheduleEncodingResult">
+		SELECT a.* FROM reference_schedule_encoding a
+		LEFT JOIN
+		ft_company_reference b
+		ON b.COMP_NAME =#{0}
+		WHERE a.client_cd =
+		b.COMP_CD;
+	</select>
+
+	<select id="getAllScheduleEncodingByClientNameAndScheduleName"
+		resultMap="ScheduleEncodingResult">
+		<!-- SELECT * FROM reference_schedule_encoding a LEFT JOIN ft_company_reference 
+			b ON b.COMP_NAME = #{0} AND a.schedule_cd = #{1} WHERE a.client_cd = b.COMP_CD; -->
+		SELECT * FROM reference_schedule_encoding WHERE
+		prikey_reference_client = (SELECT a.prikey FROM
+		reference_client_schedule a
+		LEFT JOIN
+		ft_company_reference b
+		ON
+		b.COMP_NAME =#{0} AND a.schedule_cd = #{1}
+		WHERE
+		a.client_cd =
+		b.COMP_CD);
+	</select>
+
+	<select
+		id="getScheduleEncodingByClientNameAndScheduleNameAndScheduleDay"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a
+		LEFT JOIN
+		ft_company_reference b
+		ON b.COMP_NAME = #{0} AND a.schedule_cd = #{1}
+		AND a.schedule_day =#{2}
+		WHERE a.client_cd = b.COMP_CD;
+	</select>
+
+	<select id="getAllScheduleByClientCodeDistinct"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a
+		LEFT JOIN
+		reference_client_schedule b
+		ON b.client_cd =#{client.clientCode}
+		WHERE
+		a.prikey_reference_client = b.prikey GROUP BY b.schedule_cd;
+	</select>
+
+	<select id="getAllScheduleByClientCode"
+		resultMap="ScheduleEncodingResult">
+		SELECT b.prikey,a.* FROM reference_schedule_encoding a
+		LEFT
+		JOIN
+		reference_client_schedule b
+		ON b.client_cd =#{client.clientCode}
+		WHERE
+		a.prikey_reference_client = b.prikey;
+	</select>
+
+	<select id="getAllScheduleByPrikeyReferenceClient"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE
+		a.prikey_reference_client =#{0};
+	</select>
+
+	<select id="getAllScheduleByPrikeyReferenceClientAndScheduleDay"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE
+		a.prikey_reference_client =#{0} AND a.schedule_day =#{1};
+	</select>
+
+	<select id="getAllEmployeeScheduleByEmpId"
+		resultMap="ScheduleEncodingResult">
+		SELECT c.* FROM employee_schedule_encoding a
+		LEFT JOIN
+		reference_client_schedule b ON a.prikey_reference_client =
+		b.prikey
+		LEFT JOIN reference_schedule_encoding c ON c.prikey_reference_client =
+		b.prikey
+		WHERE a.emp_id =#{0};
+	</select>
+
+	<select id="getAllScheduleUploadedByEmployeeId"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE
+		a.emp_id=#{0} AND a.prikey_reference_client IS NULL;
+	</select>
+
+	<select id="getScheduleImportedByEmpIdAndDay"
+		resultMap="ScheduleEncodingResult">
+		SELECT * FROM reference_schedule_encoding a WHERE a.emp_id
+		=#{0}
+		AND a.schedule_day =#{1} AND a.prikey_reference_client IS NULL;
+	</select>
+
+</mapper>

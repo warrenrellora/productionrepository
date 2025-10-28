@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lserv.production.overtimefilingclient.data.mapper.OvertimeFilingClientMapper">
+	<cache eviction="FIFO" flushInterval="60000" size="512"
+		readOnly="true" />
+	<resultMap type='OvertimeFilingClient'
+		id='OvertimeFilingClientResult'>
+
+		<id property='primaryKey' column='prikey' />
+		<result property='dateTimeFrom' column='datetime_from' />
+		<result property='dateTimeTo' column='datetime_to' />
+		<result property='totalOtHours' column='total_ot_hours' />
+		<result property='changedInComputer' column='terminal_id' />
+		<result property='changedOnDate' column='date_updated' />
+		<result property='bypassDateTimeTo' column='bypass_datetime_to' />
+		<result property='isExceeded' column='is_exceeded' />
+		<result property='prikeyTrail' column='prikey_trail' />
+
+		<association property='user' column='prikey_user'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='employmentHistory' column='emp_id'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getMaxEmploymentHistory' />
+
+		<association property='client' column='client_cd'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+		<association property="department" column="dept_no"
+			select="ph.com.lbpsc.production.department.data.mapper.DepartmentMapper.getDepartmentByCode" />
+
+	</resultMap>
+
+
+	<insert id='createData' parameterType='OvertimeFilingClient'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		overtime_filing_client(
+		emp_id,
+		client_cd,
+		dept_no,
+		datetime_from,
+		datetime_to,
+		total_ot_hours,
+		terminal_id,
+		date_updated,
+		prikey_user
+		)
+		VALUES(
+		#{employmentHistory.employee.employeeCode},
+		#{client.clientCode},
+		#{department.departmentCode},
+		#{dateTimeFrom},
+		#{dateTimeTo},
+		#{totalOtHours},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey}
+		);
+	</insert>
+
+	<update id='updateData' parameterType='OvertimeFilingClient'>
+		UPDATE
+		overtime_filing_client SET
+		emp_id=#{employmentHistory.employee.employeeCode},
+		client_cd=#{client.clientCode},
+		dept_no=#{department.departmentCode},
+		datetime_from=#{dateTimeFrom},
+		datetime_to=#{dateTimeTo},
+		total_ot_hours=#{totalOtHours},
+		terminal_id =
+		#{changedInComputer},
+		date_updated =
+		#{changedOnDate},
+		prikey_user
+		=#{user.primaryKey}
+		WHERE
+		prikey =
+		#{primaryKey}
+	</update>
+
+	<delete id='deleteData' parameterType='OvertimeFilingClient'>
+		DELETE FROM
+		overtime_filing_client
+		WHERE
+		prikey=#{primaryKey}
+	</delete>
+
+	<select id="getAllData" resultMap="OvertimeFilingClientResult">
+		SELECT * FROM
+		overtime_filing_client;
+	</select>
+
+	<select id="getDataById" resultMap="OvertimeFilingClientResult">
+		SELECT * FROM
+		overtime_filing_client
+		where
+		prikey=#{primaryKey};
+	</select>
+
+	<select id="getDataByEmpIdAndOvertimeDateFrom"
+		resultMap="OvertimeFilingClientResult">
+		SELECT * FROM overtime_filing_client a WHERE a.emp_id =#{0}
+		AND
+		DATE(a.datetime_from) =#{1} ORDER BY a.datetime_to;
+	</select>
+	
+	<select id="getDataByEmpIdAndOvertimeDateTo"
+		resultMap="OvertimeFilingClientResult">
+		SELECT * FROM overtime_filing_client a WHERE a.emp_id =#{0}
+		AND
+		DATE(a.datetime_to) =#{1} ORDER BY a.datetime_to;
+	</select>
+
+</mapper>
