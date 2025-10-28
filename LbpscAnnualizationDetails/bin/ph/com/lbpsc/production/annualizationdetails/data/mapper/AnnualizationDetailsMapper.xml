@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lbpsc.production.annualizationdetails.data.mapper.AnnualizationDetailsMapper">
+	<resultMap type='AnnualizationDetails' id='AnnualizationDetailsResult'>
+		<id property='primaryKey' column='PRIKEY' />
+		<id property='primaryKey' column='PRIKEY_ANNUALIZATION_DETAILS' />
+		<result property='changedInComputer' column='TERMINAL_ID' />
+		<result property='changedOnDate' column='DATE_UPDATED' />
+		<result property='amount' column='AMOUNT' />
+		<result property='days' column='DAYS' />
+
+		<association property='annualization' column='PRIKEY_ANNUALIZATION'
+			resultMap='ph.com.lbpsc.production.annualization.data.mapper.AnnualizationMapper.AnnualizationResult' />
+
+		<association property='annualizationItems' column='PRIKEY_ANNUALIZATION_ITEMS'
+			resultMap='ph.com.lbpsc.production.annualizationitems.data.mapper.AnnualizationItemsMapper.AnnualizationItemsResult' />
+
+		<association property='annualizationBreakdown' column='PRIKEY_ANNUALIZATION_BREAKDOWN'
+			resultMap='ph.com.lbpsc.production.annualizationbreakdown.data.mapper.AnnualizationBreakdownMapper.AnnualizationBreakdownResult' />
+
+		<association property='user' column='PRIKEY_USER'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+	</resultMap>
+
+	<select id='getAllAnnualizationDetails' resultMap='AnnualizationDetailsResult'>
+		select
+		a.*,
+		b.ITEM_NAME,
+		c.BREAKDOWN_NAME
+		from annualization_details a
+		left join
+		reference_annualization_items b on a.PRIKEY_ANNUALIZATION_ITEMS =
+		b.PRIKEY
+		left join reference_annualization_breakdown c on
+		a.PRIKEY_ANNUALIZATION_BREAKDOWN = c.PRIKEY
+	</select>
+
+	<select id='getAnnualizationDetailsByBreakdown' resultMap='AnnualizationDetailsResult'>
+		select
+		a.*,
+		b.ITEM_NAME,
+		c.BREAKDOWN_NAME
+		from annualization_details a
+		left join
+		reference_annualization_items b on
+		a.PRIKEY_ANNUALIZATION_ITEMS =
+		b.PRIKEY
+		left join
+		reference_annualization_breakdown c on
+		a.PRIKEY_ANNUALIZATION_BREAKDOWN = c.PRIKEY
+		where
+		a.prikey_annualization = #{annualization.primaryKey} and
+		a.prikey_annualization_breakdown =
+		#{annualizationBreakdown.primaryKey}
+	</select>
+
+	<select id="getAnnualizationDetailsById" parameterType='Integer'
+		resultMap="AnnualizationDetailsResult">
+		SELECT * FROM annualization_details WHERE PRIKEY =
+		#{primaryKey}
+	</select>
+
+	<insert id='createAnnualizationDetails' parameterType='AnnualizationDetails'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO annualization_details
+		(PRIKEY_ANNUALIZATION, PRIKEY_ANNUALIZATION_ITEMS,
+		PRIKEY_ANNUALIZATION_BREAKDOWN, AMOUNT, DAYS, PRIKEY_USER,
+		TERMINAL_ID, DATE_UPDATED)
+		VALUES
+		(#{annualization.primaryKey},
+		#{annualizationItems.primaryKey},
+		#{annualizationBreakdown.primaryKey}, #{amount}, #{days},
+		#{user.primaryKey}, #{changedInComputer}, #{changedOnDate})
+	</insert>
+
+	<update id='updateAnnualizationDetails' parameterType='AnnualizationDetails'>
+		UPDATE
+		annualization_details
+		set
+		PRIKEY_ANNUALIZATION =
+		#{annualization.primaryKey},
+		PRIKEY_ANNUALIZATION_ITEMS =
+		#{annualizationItems.primaryKey},
+		PRIKEY_ANNUALIZATION_BREAKDOWN =
+		#{annualizationBreakdown.primaryKey},
+		AMOUNT = #{amount},
+		DAYS =
+		#{days},
+		PRIKEY_USER = #{user.primaryKey},
+		TERMINAL_ID =
+		#{changedInComputer},
+		DATE_UPDATED = #{changedOnDate}
+		where
+		PRIKEY =
+		#{primaryKey}
+	</update>
+
+	<delete id='deleteAnnualizationDetails' parameterType='AnnualizationDetails'>
+		DELETE
+		FROM annualization_details WHERE PRIKEY = #{primaryKey}
+	</delete>
+
+	<delete id='deleteAnnualizationDetailsList' parameterType='AnnualizationDetails'>
+		DELETE FROM
+		annualization_details WHERE PRIKEY IN
+		<foreach item='annualizationDetails' index='index'
+			collection='annualizationDetailsList' open="(" separator="," close=")">
+			#{annualizationDetails.primaryKey}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lbpsc.production.annualizationimportdetails.data.mapper.AnnualizationImportDetailsMapper">
+	<resultMap type='AnnualizationImportDetails' id='AnnualizationImportDetailsResult'>
+		<id property='primaryKey' column='PRIKEY' />
+		<id property='primaryKey' column='PRIKEY_ANNUALIZATION_IMPORT_DETAILS' />
+		<result property='payFrom' column='PAY_FROM' />
+		<result property='payTo' column='PAY_TO' />
+		<result property='amount' column='AMOUNT' />
+		<result property='days' column='DAYS' />
+		<result property='changedInComputer' column='TERMINAL_ID' />
+		<result property='changedOnDate' column='DATE_UPDATED' />
+
+		<association property='user' column='PRIKEY_USER'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+			
+		<association property='employee' column='EMP_ID'
+			resultMap='ph.com.lbpsc.production.employee.data.mapper.EmployeeMapper.EmployeeResult' />
+		
+		<association property='annualization' column='PRIKEY_ANNUALIZATION'
+			resultMap='ph.com.lbpsc.production.annualization.data.mapper.AnnualizationMapper.AnnualizationResult' />
+		
+		<association property='annualizationItems' column='PRIKEY_ANNUALIZATION_ITEMS'
+			resultMap='ph.com.lbpsc.production.annualizationitems.data.mapper.AnnualizationItemsMapper.AnnualizationItemsResult' />
+		
+	</resultMap>
+	
+	<select id='getAnnualizationImportDetails' parameterType='AnnualizationImportDetails'
+		resultMap='AnnualizationImportDetailsResult'>
+		select 
+		a.EMP_ID,
+		a.PAY_FROM,
+		a.PAY_TO,
+		a.AMOUNT,
+		a.DAYS,
+		a.PRIKEY_ANNUALIZATION_ITEMS,
+		a.PRIKEY_ANNUALIZATION,
+		a.PRIKEY_USER,
+		a.TERMINAL_ID,
+		a.DATE_UPDATED,
+		a.PRIKEY PRIKEY_ANNUALIZATION_IMPORT_DETAILS, 
+		b.item_name,
+		d.client_cd,
+		d.surname,
+		d.first_name,
+		d.middle_name,
+		d.suffix,
+		d.TIN
+	    from annualization_import_details a 
+		left join reference_annualization_items b on a.PRIKEY_ANNUALIZATION_ITEMS = b.prikey 
+		left join annualization_data c on a.PRIKEY_ANNUALIZATION = c.PRIKEY
+		left join pe_personnel d on a.EMP_ID = d.emp_id
+		<where>
+			<if test="employee != null">
+				a.emp_id = #{employee.employeeCode}
+			</if>
+			
+			<if test="annualizationItems != null">
+				AND a.PRIKEY_ANNUALIZATION_ITEMS = #{annualizationItems.primaryKey}
+			</if>
+			
+			<if test="amount != null">
+				AND a.amount = #{amount}
+			</if>
+			
+			<if test="days != null">
+				AND a.days = #{days}
+			</if>
+			
+			<if test="payFrom != null">
+				AND a.pay_from = #{payFrom}
+			</if>
+			
+			<if test="payTo != null">
+				AND a.pay_to = #{payTo}
+			</if>
+		</where>
+	</select>
+	
+	<select id='getAnnualizationImportDetailsByDate' parameterType='AnnualizationImportDetails'
+		resultMap='AnnualizationImportDetailsResult'>
+		select 
+		a.EMP_ID,
+		a.PAY_FROM,
+		a.PAY_TO,
+		a.AMOUNT,
+		a.DAYS,
+		a.PRIKEY_ANNUALIZATION_ITEMS,
+		a.PRIKEY_ANNUALIZATION,
+		a.PRIKEY_USER,
+		a.TERMINAL_ID,
+		a.DATE_UPDATED,
+		a.PRIKEY PRIKEY_ANNUALIZATION_IMPORT_DETAILS, 
+		b.item_name,
+		d.client_cd,
+		d.surname,
+		d.first_name,
+		d.middle_name,
+		d.suffix,
+		d.TIN
+	    from annualization_import_details a 
+		left join reference_annualization_items b on a.PRIKEY_ANNUALIZATION_ITEMS = b.prikey 
+		left join annualization_data c on a.PRIKEY_ANNUALIZATION = c.PRIKEY
+		left join pe_personnel d on a.EMP_ID = d.emp_id
+		<where>
+			<if test="employee != null">
+				a.emp_id = #{employee.employeeCode}
+			</if>
+			
+			<if test="annualizationItems != null">
+				AND a.PRIKEY_ANNUALIZATION_ITEMS = #{annualizationItems.primaryKey}
+			</if>
+			
+			<if test="amount != null">
+				AND a.amount = #{amount}
+			</if>
+			
+			<if test="days != null">
+				AND a.days = #{days}
+			</if>
+			
+			<if test="payFrom != null">
+				AND a.pay_from between #{payFrom} and #{payTo}
+			</if>
+		</where>
+	</select>
+
+	<select id='getAllAnnualizationImportDetails' resultMap='AnnualizationImportDetailsResult'>
+		select 			
+		a.EMP_ID,
+		a.PAY_FROM,
+		a.PAY_TO,
+		a.AMOUNT,
+		a.DAYS,
+		a.PRIKEY_ANNUALIZATION_ITEMS,
+		a.PRIKEY_ANNUALIZATION,
+		a.PRIKEY_USER,
+		a.TERMINAL_ID,
+		a.DATE_UPDATED,
+		a.PRIKEY PRIKEY_ANNUALIZATION_IMPORT_DETAILS, 
+		b.item_name,
+		d.client_cd,
+		d.surname,
+		d.first_name,
+		d.middle_name,
+		d.suffix,
+		d.TIN from annualization_import_details a 
+		left join reference_annualization_items b on a.PRIKEY_ANNUALIZATION_ITEMS = b.prikey 
+		left join annualization_data c on a.PRIKEY_ANNUALIZATION = c.PRIKEY
+		left join pe_personnel d on a.EMP_ID = d.emp_id
+	</select>
+
+	<select id="getAnnualizationImportDetailsById" parameterType='Integer'
+		resultMap="AnnualizationImportDetailsResult">
+		select
+		a.EMP_ID,
+		a.PAY_FROM,
+		a.PAY_TO,
+		a.AMOUNT,
+		a.DAYS,
+		a.PRIKEY_ANNUALIZATION_ITEMS,
+		a.PRIKEY_ANNUALIZATION,
+		a.PRIKEY_USER,
+		a.TERMINAL_ID,
+		a.DATE_UPDATED,
+		a.PRIKEY PRIKEY_ANNUALIZATION_IMPORT_DETAILS, 
+		b.item_name,
+		d.client_cd,
+		d.surname,
+		d.first_name,
+		d.middle_name,
+		d.suffix,
+		d.TIN from annualization_import_details a 
+		left join reference_annualization_items b on a.PRIKEY_ANNUALIZATION_ITEMS = b.prikey 
+		left join annualization_data c on a.PRIKEY_ANNUALIZATION = c.PRIKEY
+		left join pe_personnel d on a.EMP_ID = d.emp_id WHERE a.PRIKEY =
+		#{primaryKey}
+	</select>
+
+	<insert id='createAnnualizationImportDetails' parameterType='AnnualizationImportDetails'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO
+		annualization_import_details
+		(EMP_ID, PAY_FROM, PAY_TO, AMOUNT, DAYS, PRIKEY_ANNUALIZATION_ITEMS,
+		PRIKEY_ANNUALIZATION, PRIKEY_USER, TERMINAL_ID, DATE_UPDATED)
+		VALUES
+		(#{employee.employeeCode}, #{payFrom}, #{payTo}, #{amount}, #{days},
+		#{annualizationItems.primaryKey}, #{annualization.primaryKey},
+		#{user.primaryKey}, #{changedInComputer}, #{changedOnDate})
+	</insert>
+
+	<update id='updateAnnualizationImportDetails' parameterType='AnnualizationImportDetails'>
+		UPDATE annualization_import_details
+		set
+		EMP_ID =
+		#{employee.employeeCode},
+		PAY_FROM = #{payFrom},
+		PAY_TO = #{payTo},
+		AMOUNT = #{amount},
+		DAYS = #{days},
+		PRIKEY_ANNUALIZATION_ITEMS = #{annualizationItems.primaryKey},
+		PRIKEY_ANNUALIZATION = #{annualization.primaryKey},
+		PRIKEY_USER = #{user.primaryKey},
+		TERMINAL_ID = #{changedInComputer},
+		DATE_UPDATED = #{changedOnDate}
+		where
+		PRIKEY = #{primaryKey}
+	</update>
+
+	<delete id='deleteAnnualizationImportDetails' parameterType='AnnualizationImportDetails'>
+		DELETE FROM annualization_import_details WHERE PRIKEY = #{primaryKey}
+	</delete>
+
+</mapper>

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ph.com.lbpsc.production.annualization.data.mapper.AnnualizationMapper">
+	<resultMap type='Annualization' id='AnnualizationResult'>
+		<id property='primaryKey' column='PRIKEY' />
+		<id property='primaryKey' column='PRIKEY_ANNUALIZATION' />
+		<result property='amountOfTaxableNetRegularPay' column='TAXABLE_NET_REGULAR_PAY' />
+		<result property='amountOfNonTaxableNetRegularPay' column='NON_TAXABLE_NET_REGULAR_PAY' />
+
+		<result property='amountOfTaxableHolidayPay' column='TAXABLE_HOLIDAY_PAY' />
+		<result property='amountOfNonTaxableHolidayPay' column='NON_TAXABLE_HOLIDAY_PAY' />
+
+		<result property='amountOfTaxableOvertimePay' column='TAXABLE_OVERTIME_AMOUNT' />
+		<result property='amountOfNonTaxableOvertimePay' column='NON_TAXABLE_OVERTIME_AMOUNT' />
+
+		<result property='amountOfTaxableNightDifferentialPay' column='TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT' />
+		<result property='amountOfNonTaxableNightDifferentialPay'
+			column='NON_TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT' />
+
+		<result property='amountOfTaxableBasicPay' column='TAXABLE_BASIC_PAY' />
+		<result property='amountOfNonTaxableBasicPay' column='NON_TAXABLE_BASIC_PAY' />
+
+		<result property='amountOfGrossPay' column='GROSS_PAY' />
+		<result property='amountOfWithholdingTax' column='WITHHOLDING_TAX' />
+		<result property='amountOfEmployeeShare' column='EMPLOYEE_SHARE' />
+		<result property='amountOfCompanyShare' column='COMPANY_SHARE' />
+		<result property='amountOfEmployeeCompensation' column='EMPLOYEE_COMPENSATION' />
+
+		<result property='amountOfTaxableHazardPay' column='TAXABLE_HAZARD_PAY' />
+		<result property='amountOfNonTaxableHazardPay' column='NON_TAXABLE_HAZARD_PAY' />
+
+		<result property='amountOfTaxableCostOfLivingAllowance' column='TAXABLE_COLA' />
+		<result property='amountOfNonTaxableCostOfLivingAllowance'
+			column='NON_TAXABLE_COLA' />
+		<result property='integralRiceAllowance'
+			column='INTEGRAL_RICE_ALLOWANCE' />
+
+		<result property='deminimis' column='DEMINIMIS' />
+		<result property='otherCompensation' column='OTHER_COMPENSATION' />
+		<result property='taxableCompensation' column='TAXABLE_COMPENSATION' />
+		<result property='otherBenefitsAnd13thMonth' column='13THMONTH_OTHER_BENEFITS' />
+		<result property='taxableBonus' column='TAXABLE_13THMONTH_OTHER_BENEFITS' />
+		<result property='nonTaxableAmount' column='NONTAXABLE_AMOUNT' />
+		<result property='taxableAmount' column='TAXABLE_AMOUNT' />
+		<result property='totalAmountTaxes' column='TOTAL_AMOUNT_TAXES' />
+		<result property='taxDueAmount' column='TAX_DUE' />
+		<result property='isPreviousAnnual' column='PREVIOUS_ANNUAL' />
+		<result property='startOnDate' column='PAY_FROM' />
+		<result property='endOnDate' column='PAY_TO' />
+		<result property='annualizationYear' column='ANNUALIZATION_YEAR' />
+		<result property='isAnnualization' column='ANNUALIZATION' />
+		<result property='isQuitClaim' column='QUITCLAIM' />
+		<result property='isUploaded' column='UPLOAD' />
+		<result property='recordCount' column='RECORD_COUNT' />
+		<result property='lockedOnDate' column='DATE_LOCKED' />
+		<result property='remarks' column='REMARKS' />
+		<result property='changedByUser' column='USER_ID' />
+		<result property='changedInComputer' column='TERMINAL_ID' />
+		<result property='changedOnDate' column='DATE_UPDATED' />
+
+		<association property='previousAnnualization' column='PRIKEY_PREVIOUS_ANNUAL'
+			select='ph.com.lbpsc.production.annualization.data.mapper.AnnualizationMapper.getAnnualizationById' />
+
+		<association property='employee' column='emp_id'
+			select='ph.com.lbpsc.production.employee.data.mapper.EmployeeMapper.getEmployeeById' />
+
+		<association property='client' column='client'
+			select='ph.com.lbpsc.production.client.data.mapper.ClientMapper.getClientByCode' />
+
+		<association property='employmentHistory' column='PRIKEY_EMPLOYMENT_HISTORY'
+			select='ph.com.lbpsc.production.employmenthistory.data.mapper.EmploymentHistoryMapper.getEmploymentHistoryById' />
+
+		<association property='thirteenthMonthPay' column='PRIKEY_THIRTEENTH_MONTH'
+			select='ph.com.lbpsc.production.thirteenthmonthpay.data.mapper.ThirteenthMonthPayMapper.getThirteenthMonthPayById' />
+
+		<association property='serviceIncentiveLeave' column='PRIKEY_SERVICE_INCENTIVE_LEAVE'
+			select='ph.com.lbpsc.production.serviceincentiveleave.data.mapper.ServiceIncentiveLeaveMapper.getServiceIncentiveLeaveById' />
+
+		<association property='user' column='PRIKEY_USER'
+			select='ph.com.lbpsc.production.user.data.mapper.UserMapper.getUserByCode' />
+
+		<association property='quitclaim' column='PRIKEY_QUITCLAIM'
+			select='ph.com.lserv.production.quitclaimprocess.data.mapper.QuitclaimMapper.getObjectByKey' />
+			
+		<collection property="annualizationDetailsList" 
+			javaType="ArrayList" column="PRIKEY_ANNUALIZATION"
+			resultMap="ph.com.lbpsc.production.annualizationdetails.data.mapper.AnnualizationDetailsMapper.AnnualizationDetailsResult" />
+	</resultMap>
+
+	<select id='getAllAnnualization' resultMap='AnnualizationResult'>
+		SELECT * FROM
+		annualization_data
+	</select>
+
+	<select id="getAnnualizationById" parameterType='Integer'
+		resultMap="AnnualizationResult">
+		SELECT * FROM annualization_data WHERE PRIKEY =
+		#{primaryKey}
+	</select>
+
+	<insert id='createAnnualization' parameterType='Annualization'
+		useGeneratedKeys='true' keyProperty='primaryKey'>
+		INSERT INTO annualization_data
+		(EMP_ID,
+		CLIENT,
+		TAXABLE_NET_REGULAR_PAY,
+		NON_TAXABLE_NET_REGULAR_PAY,
+		TAXABLE_BASIC_PAY,
+		NON_TAXABLE_BASIC_PAY,
+		TAXABLE_HOLIDAY_PAY,
+		NON_TAXABLE_HOLIDAY_PAY,
+		TAXABLE_OVERTIME_AMOUNT,
+		NON_TAXABLE_OVERTIME_AMOUNT,
+		TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT,
+		NON_TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT,
+		GROSS_PAY,
+		WITHHOLDING_TAX,
+		EMPLOYEE_SHARE,
+		COMPANY_SHARE,
+		EMPLOYEE_COMPENSATION,
+		PRIKEY_THIRTEENTH_MONTH,
+		PRIKEY_SERVICE_INCENTIVE_LEAVE,
+		TAXABLE_HAZARD_PAY,
+		NON_TAXABLE_HAZARD_PAY,
+		TAXABLE_COLA,
+		NON_TAXABLE_COLA,
+		INTEGRAL_RICE_ALLOWANCE,
+		DEMINIMIS,
+		OTHER_COMPENSATION,
+		13THMONTH_OTHER_BENEFITS,
+		TAXABLE_13THMONTH_OTHER_BENEFITS,
+		NONTAXABLE_AMOUNT,
+		TAXABLE_AMOUNT,
+		TOTAL_AMOUNT_TAXES,
+		TAX_DUE,
+		PRIKEY_PREVIOUS_ANNUAL,
+		PREVIOUS_ANNUAL,
+		PRIKEY_EMPLOYMENT_HISTORY,
+		PAY_FROM,
+		PAY_TO,
+		ANNUALIZATION_YEAR,
+		ANNUALIZATION,
+		QUITCLAIM,
+		UPLOAD,
+		RECORD_COUNT,
+		DATE_LOCKED,
+		REMARKS,
+		USER_ID,
+		TERMINAL_ID,
+		DATE_UPDATED,
+		PRIKEY_USER,
+		PRIKEY_QUITCLAIM)
+		VALUES
+		(#{employee.employeeCode},
+		#{client.clientCode},
+		#{amountOfTaxableNetRegularPay},
+		#{amountOfNonTaxableNetRegularPay},
+		#{amountOfTaxableBasicPay},
+		#{amountOfNonTaxableBasicPay},
+		#{amountOfTaxableHolidayPay},
+		#{amountOfNonTaxableHolidayPay},
+		#{amountOfTaxableOvertimePay},
+		#{amountOfNonTaxableOvertimePay},
+		#{amountOfTaxableNightDifferentialPay},
+		#{amountOfNonTaxableNightDifferentialPay},
+		#{amountOfGrossPay},
+		#{amountOfWithholdingTax},
+		#{amountOfEmployeeShare},
+		#{amountOfCompanyShare},
+		#{amountOfEmployeeCompensation},
+		#{thirteenthMonthPay.primaryKey},
+		#{serviceIncentiveLeave.primaryKey},
+		#{amountOfTaxableHazardPay},
+		#{amountOfNonTaxableHazardPay},
+		#{amountOfTaxableCostOfLivingAllowance},
+		#{amountOfNonTaxableCostOfLivingAllowance},
+		#{integralRiceAllowance},
+		#{deminimis},
+		#{otherCompensation},
+		#{otherBenefitsAnd13thMonth},
+		#{taxableBonus},
+		#{nonTaxableAmount},
+		#{taxableAmount},
+		#{totalAmountTaxes},
+		#{taxDueAmount},
+		#{previousAnnualization.primaryKey},
+		#{isPreviousAnnual},
+		#{employmentHistory.primaryKey},
+		#{startOnDate},
+		#{endOnDate},
+		#{annualizationYear},
+		#{isAnnualization},
+		#{isQuitClaim},
+		#{isUploaded},
+		#{recordCount},
+		#{lockedOnDate},
+		#{remarks},
+		#{changedByUser},
+		#{changedInComputer},
+		#{changedOnDate},
+		#{user.primaryKey},
+		#{quitclaim.primaryKey})
+	</insert>
+
+	<update id='updateAnnualization' parameterType='Annualization'>
+		UPDATE
+		annualization_data
+		set
+		EMP_ID = #{employee.employeeCode},
+		CLIENT =
+		#{client.clientCode},
+		TAXABLE_NET_REGULAR_PAY =
+		#{amountOfTaxableNetRegularPay},
+		NON_TAXABLE_NET_REGULAR_PAY =
+		#{amountOfNonTaxableNetRegularPay},
+		TAXABLE_BASIC_PAY =
+		#{amountOfTaxableBasicPay},
+		NON_TAXABLE_BASIC_PAY =
+		#{amountOfNonTaxableBasicPay},
+		TAXABLE_HOLIDAY_PAY =
+		#{amountOfTaxableHolidayPay},
+		NON_TAXABLE_HOLIDAY_PAY =
+		#{amountOfNonTaxableHolidayPay},
+		TAXABLE_OVERTIME_AMOUNT =
+		#{amountOfTaxableOvertimePay},
+		NON_TAXABLE_OVERTIME_AMOUNT =
+		#{amountOfNonTaxableOvertimePay},
+		TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT =
+		#{amountOfTaxableNightDifferentialPay},
+		NON_TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT =
+		#{amountOfNonTaxableNightDifferentialPay},
+		GROSS_PAY =
+		#{amountOfGrossPay},
+		WITHHOLDING_TAX = #{amountOfWithholdingTax},
+		EMPLOYEE_SHARE = #{amountOfEmployeeShare},
+		COMPANY_SHARE =
+		#{amountOfCompanyShare},
+		EMPLOYEE_COMPENSATION =
+		#{amountOfEmployeeCompensation},
+		PRIKEY_THIRTEENTH_MONTH =
+		#{thirteenthMonthPay.primaryKey},
+		PRIKEY_SERVICE_INCENTIVE_LEAVE =
+		#{serviceIncentiveLeave.primaryKey},
+		TAXABLE_HAZARD_PAY =
+		#{amountOfTaxableHazardPay},
+		NON_TAXABLE_HAZARD_PAY =
+		#{amountOfNonTaxableHazardPay},
+		TAXABLE_COLA =
+		#{amountOfTaxableCostOfLivingAllowance},
+		NON_TAXABLE_COLA =
+		#{amountOfNonTaxableCostOfLivingAllowance},
+		INTEGRAL_RICE_ALLOWANCE =
+		#{integralRiceAllowance},
+		DEMINIMIS = #{deminimis},
+		OTHER_COMPENSATION = #{otherCompensation},
+		13THMONTH_OTHER_BENEFITS =
+		#{otherBenefitsAnd13thMonth},
+		TAXABLE_13THMONTH_OTHER_BENEFITS =
+		#{taxableBonus},
+		NONTAXABLE_AMOUNT = #{nonTaxableAmount},
+		TAXABLE_AMOUNT = #{taxableAmount},
+		TOTAL_AMOUNT_TAXES =
+		#{totalAmountTaxes},
+		TAX_DUE = #{taxDueAmount},
+		PRIKEY_PREVIOUS_ANNUAL =
+		#{previousAnnualization.primaryKey},
+		PREVIOUS_ANNUAL =
+		#{isPreviousAnnual},
+		PRIKEY_EMPLOYMENT_HISTORY =
+		#{employmentHistory.primaryKey},
+		PAY_FROM = #{startOnDate},
+		PAY_TO =
+		#{endOnDate},
+		ANNUALIZATION_YEAR = #{annualizationYear},
+		ANNUALIZATION =
+		#{isAnnualization},
+		QUITCLAIM = #{isQuitClaim},
+		UPLOAD = #{isUploaded},
+		RECORD_COUNT = #{recordCount},
+		DATE_LOCKED = #{lockedOnDate},
+		REMARKS =
+		#{remarks},
+		USER_ID = #{changedByUser},
+		TERMINAL_ID =
+		#{changedInComputer},
+		DATE_UPDATED = #{changedOnDate},
+		PRIKEY_USER =
+		#{user.primaryKey},
+		PRIKEY_QUITCLAIM = #{quitclaim.primaryKey}
+		where
+		PRIKEY = #{primaryKey}
+	</update>
+
+	<delete id='deleteAnnualization' parameterType='Annualization'>
+		DELETE FROM
+		annualization_data WHERE PRIKEY = #{primaryKey}
+	</delete>
+
+	<select id="getEmployeePayrollByBatchDate" resultMap="AnnualizationResult">
+		call
+		sproc_annualization(#{0.employeeCode}, #{1}, #{2})
+	</select>
+
+	<select id="getAnnualizationByEmployeeId" resultMap="AnnualizationResult">
+		SELECT *
+		FROM annualization_data WHERE EMP_ID =
+		#{0.employeeCode}
+		and
+		ANNUALIZATION_YEAR = #{1} and PREVIOUS_ANNUAL =
+		#{2}
+	</select>
+
+	<select id="getAnnualizationByClient" resultMap="AnnualizationResult">
+		SELECT *
+		FROM
+		annualization_data WHERE CLIENT =
+		#{0.clientCode} and
+		ANNUALIZATION_YEAR = #{1}
+	</select>
+
+	<select id="getAnnualizationByAnnualizationYear" resultMap="AnnualizationResult">
+		SELECT a.EMP_ID,
+		a.CLIENT,
+		a.TAXABLE_NET_REGULAR_PAY,
+		a.NON_TAXABLE_NET_REGULAR_PAY,
+		a.TAXABLE_BASIC_PAY,
+		a.NON_TAXABLE_BASIC_PAY,
+		a.TAXABLE_HOLIDAY_PAY,
+		a.NON_TAXABLE_HOLIDAY_PAY,
+		a.TAXABLE_OVERTIME_AMOUNT,
+		a.NON_TAXABLE_OVERTIME_AMOUNT,
+		a.TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT,
+		a.NON_TAXABLE_NIGHT_DIFFERENTIAL_AMOUNT,
+		a.GROSS_PAY,
+		a.WITHHOLDING_TAX,
+		a.EMPLOYEE_SHARE,
+		a.COMPANY_SHARE,
+		a.EMPLOYEE_COMPENSATION,
+		a.PRIKEY_THIRTEENTH_MONTH,
+		a.PRIKEY_SERVICE_INCENTIVE_LEAVE,
+		a.TAXABLE_HAZARD_PAY,
+		a.NON_TAXABLE_HAZARD_PAY,
+		a.TAXABLE_COLA,
+		a.NON_TAXABLE_COLA,
+		a.INTEGRAL_RICE_ALLOWANCE,
+		a.DEMINIMIS,
+		a.OTHER_COMPENSATION,
+		a.13THMONTH_OTHER_BENEFITS,
+		a.TAXABLE_13THMONTH_OTHER_BENEFITS,
+		a.NONTAXABLE_AMOUNT,
+		a.TAXABLE_AMOUNT,
+		a.TOTAL_AMOUNT_TAXES,
+		a.TAX_DUE,
+		a.PRIKEY_PREVIOUS_ANNUAL,
+		a.PREVIOUS_ANNUAL,
+		a.PRIKEY_EMPLOYMENT_HISTORY,
+		a.PAY_FROM,
+		a.PAY_TO,
+		a.ANNUALIZATION_YEAR,
+		a.ANNUALIZATION,
+		a.QUITCLAIM,
+		a.UPLOAD,
+		a.RECORD_COUNT,
+		a.DATE_LOCKED,
+		a.REMARKS,
+		a.USER_ID,
+		a.PRIKEY_QUITCLAIM,
+		a.prikey prikey_annualization,
+		b.prikey_annualization,
+		b.prikey_annualization_items,
+		b.prikey_annualization_breakdown,
+		b.amount,
+		b.days,
+		b.prikey prikey_annualization_details,
+		c.ITEM_NAME,
+		d.BREAKDOWN_NAME
+		FROM annualization_data a
+		left JOIN annualization_details b ON a.PRIKEY = b.PRIKEY_ANNUALIZATION
+		LEFT join reference_annualization_items c ON
+		b.PRIKEY_ANNUALIZATION_ITEMS = c.PRIKEY
+		LEFT JOIN reference_annualization_breakdown d ON
+		b.PRIKEY_ANNUALIZATION_BREAKDOWN = d.PRIKEY WHERE
+		a.ANNUALIZATION_YEAR
+		= #{annualizationYear}
+		and a.CLIENT in
+		<foreach item='client' index='index' collection='clientList'
+			open="(" separator="," close=")"> #{client.clientCode} </foreach>
+	</select>
+
+	<select id="getAnnualizationPayrollByBatchDate" resultMap="AnnualizationResult">
+		call
+		sproc_annualization_payroll_select(#{employee.employeeCode},
+		#{batchDateFrom},
+		#{batchDateTo})
+	</select>
+	
+	<select id="getAnnualizationByQuitclaim" resultMap="AnnualizationResult">
+		SELECT a.* FROM annualization_data a 
+		LEFT JOIN quitclaim_data b ON b.PRIKEY = a.PRIKEY_QUITCLAIM
+		WHERE a.EMP_ID = #{0.employeeCode} 
+			AND a.ANNUALIZATION_YEAR =  #{1}  
+			AND a.PRIKEY_QUITCLAIM = #{2};
+	</select>
+	
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%-5p: %c - %m%n" />
+		</Console>
+	</appenders>
+	<Loggers>
+		<logger name="org.mybatis" level="info" />
+		<logger
+			name="ph.com.lbpsc.production.annualization.data.mapper.AnnualizationMapper"
+			level="OFF" />
+		<root level="info">
+			<appender-ref ref="console" />
+		</root>
+	</Loggers>
+
+</Configuration>

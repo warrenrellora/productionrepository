@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE configuration
+PUBLIC '-//mybatis.org//DTD Config 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-config.dtd'>
+<configuration>
+	<properties
+		resource='ph/com/lbpsc/production/processannualization/resources/jdbc.properties' />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	<typeAliases>
+		<typeAlias type='ph.com.lbpsc.production.annualization.model.Annualization'
+			alias='Annualization'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.employee.model.Employee'
+			alias='Employee'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.thirteenthmonthpay.model.ThirteenthMonthPay'
+			alias='ThirteenthMonthPay'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.serviceincentiveleave.model.ServiceIncentiveLeave'
+			alias='ServiceIncentiveLeave'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.employmenthistory.model.EmploymentHistory'
+			alias='EmploymentHistory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.client.model.Client' alias='Client'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.company.model.Company' alias='Company'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.region.model.Region' alias='Region'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.gender.model.Gender' alias='Gender'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.civilstatus.model.CivilStatus'
+			alias='CivilStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.taxstatus.model.TaxStatus'
+			alias='TaxStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.department.model.Department'
+			alias='Department'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.position.model.Position'
+			alias='Position'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.positioncategory.model.PositionCategory'
+			alias='PositionCategory'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.appointmentstatus.model.AppointmentStatus'
+			alias='AppointmentStatus'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payroll.model.Payroll' alias='Payroll'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.payrolltype.model.PayrollType'
+			alias='PayrollType'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.user.model.User'
+			alias='User'></typeAlias>
+		<typeAlias type='ph.com.lbpsc.production.leave.model.Leave'
+			alias='Leave'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.employmentconfiguration.model.EmploymentConfiguration'
+			alias='EmploymentConfiguration'></typeAlias>
+		<typeAlias
+			type='ph.com.lbpsc.production.taxidentificationnumber.model.TaxIdentificationNumber'
+			alias='TaxIdentificationNumber'></typeAlias>
+
+		<typeAlias	type='ph.com.lbpsc.production.annualizationdetails.model.AnnualizationDetails'
+			alias='AnnualizationDetails'></typeAlias>
+			
+		<typeAlias type='ph.com.lserv.production.quitclaimprocess.model.Quitclaim' alias='Quitclaim'></typeAlias>
+	</typeAliases>
+	<environments default='development'>
+		<environment id='development'>
+			<transactionManager type='JDBC' />
+			<dataSource type='POOLED'>
+				<property name='driver' value='${jdbc.driverClassName}' />
+				<property name='url'
+					value='jdbc:mysql://${jdbc.host}/${jdbc.schemaName}?useCompression=true' />
+				<property name='username' value='${jdbc.username}' />
+				<property name='password' value='${jdbc.password}' />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper
+			resource='ph/com/lbpsc/production/annualization/data/mapper/AnnualizationMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/serviceincentiveleave/data/mapper/ServiceIncentiveLeaveMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/thirteenthmonthpay/data/mapper/ThirteenthMonthPayMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employee/data/mapper/EmployeeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/serviceincentiveleave/data/mapper/ServiceIncentiveLeaveMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/client/data/mapper/ClientMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/company/data/mapper/CompanyMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/region/data/mapper/RegionMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/gender/data/mapper/GenderMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/civilstatus/data/mapper/CivilStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/taxstatus/data/mapper/TaxStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/department/data/mapper/DepartmentMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/position/data/mapper/PositionMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/positioncategory/data/mapper/PositionCategoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/appointmentstatus/data/mapper/AppointmentStatusMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmenthistory/data/mapper/EmploymentHistoryMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payroll/data/mapper/PayrollMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/payrolltype/data/mapper/PayrollTypeMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/user/data/mapper/UserMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/leave/data/mapper/LeaveMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/employmentconfiguration/data/mapper/EmploymentConfigurationMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/taxidentificationnumber/data/mapper/TaxIdentificationNumberMapper.xml' />
+		<mapper
+			resource='ph/com/lbpsc/production/annualizationdetails/data/mapper/AnnualizationDetailsMapper.xml' />
+			
+		<mapper resource='ph/com/lserv/production/quitclaimprocess/data/mapper/QuitclaimMapper.xml' />
+	</mappers>
+</configuration>

@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import ph.com.lbpsc.production.custom.controls.formatteddatepicker.FormattedDatePicker?>
+<?import ph.com.lbpsc.production.custom.controls.validatedtextfield.ValidatedTextField?>
+
+<AnchorPane prefHeight="677.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.com.lbpsc.production.processannualization.view.BrowseAnnualizationController">
+   <children>
+      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="610.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="0.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <items>
+                  <Button fx:id="buttonCollect" mnemonicParsing="false" onAction="#handleCollect" prefHeight="25.0" prefWidth="60.0" text="Collect" />
+                  <Button fx:id="buttonProcess" mnemonicParsing="false" onAction="#handleProcess" prefHeight="25.0" prefWidth="60.0" text="Process" />
+                  <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="60.0" text="Delete" />
+                  <MenuButton fx:id="menuButtonSearch" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Search">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleSearchClient" text="Client" />
+                      <MenuItem fx:id="menuItemSearchEmployee" mnemonicParsing="false" onAction="#handleSearch" text="Employee" />
+                        <MenuItem fx:id="menuItemSearchProcessedEmployee" mnemonicParsing="false" onAction="#handleSearchProcessedEmployee" text="Processed Employee" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton fx:id="buttonFile" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="File">
+                     <items>
+                        <Menu mnemonicParsing="false" text="Previous Annualization">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportPreviousAnnualization" text="Export Template" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleImportPreviousAnnualization" text="Import File" />
+                          </items>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" text="test" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleShowAnnualizationImportDetails" text="Annualization Import Details" />
+                     </items>
+                  </MenuButton>
+                  <MenuButton fx:id="menuButtonPrint" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Print">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePrint2316" text="2316 Report" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleEmail2316" text="Email 2316" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSettings" text="Print Settings" />
+                     </items>
+                  </MenuButton>
+                  <MenuButton fx:id="menuButtonPrint1" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Schedule">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleGenerateSchedule1" text="Schedule 7.1" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleGenerateSchedule3" text="Schedule 7.3" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleGenerateSchedule4" text="Schedule 7.4" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleGenerateSchedule5" text="Schedule 7.5" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleGenerateStandard" text="All Data" />
+                     </items>
+                  </MenuButton>
+                  <MenuButton fx:id="menuButtonFilter" mnemonicParsing="false" text="Filter By :">
+                    <items>
+                      <MenuItem fx:id="menuItem1" mnemonicParsing="false" onAction="#handle71" text="7.1" />
+                      <MenuItem fx:id="menuItem3" mnemonicParsing="false" onAction="#handle73" text="7.3" />
+                        <MenuItem fx:id="menuItem4" mnemonicParsing="false" onAction="#handle74" text="7.4" />
+                        <MenuItem fx:id="menuItem5" mnemonicParsing="false" onAction="#handle75" text="7.5" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAllData" text="All data" />
+                    </items>
+                  </MenuButton>
+                  <ValidatedTextField fx:id="validatedTextFieldSortByChar" onKeyReleased="#handleSortByLetter" prefHeight="25.0" prefWidth="29.0" />
+               </items>
+            </ToolBar>
+         </top>
+         <center>
+            <AnchorPane prefHeight="271.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="570.0" prefWidth="1453.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox prefHeight="570.0" prefWidth="468.0">
+                           <children>
+                              <AnchorPane prefHeight="40.0" prefWidth="479.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <GridPane layoutX="14.0" layoutY="3.0" prefHeight="33.0" prefWidth="764.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="77.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="153.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="76.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.0" minWidth="10.0" prefWidth="181.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Pay To:" GridPane.columnIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <FormattedDatePicker fx:id="formattedDatePickerPayFrom" GridPane.columnIndex="1" />
+                                          <Label text="Pay From:">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <FormattedDatePicker fx:id="formattedDatePickerPayTo" GridPane.columnIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="160.0" prefWidth="479.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <TableView fx:id="tableViewClient" prefHeight="235.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableColumnClientCheckBox" prefWidth="30.0" />
+                                          <TableColumn fx:id="tableColumnClient" prefWidth="435.0" text="Client" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="176.0" prefWidth="479.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <TableView fx:id="tableViewAnnualization" prefHeight="200.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableColumnAnnualizationCheckBox" prefWidth="30.0" />
+                                          <TableColumn fx:id="tableColumnAnnualizationEmployee" prefWidth="318.0" text="Employee Name" />
+                                          <TableColumn fx:id="tableColumnAnnualizationStatus" prefWidth="120.0" text="Status" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane VBox.vgrow="NEVER">
+                                 <children>
+                                    <GridPane>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="95.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="384.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Total Records :">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="3.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="labelTotalRecords" text="                          " GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <TableView fx:id="tableViewProcessAnnualization" prefHeight="200.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableColumnProcessAnnualizationCheckBox" prefWidth="30.0" />
+                                          <TableColumn fx:id="tableColumnProcessAnnualizationEmployee" prefWidth="318.0" text="Employee Name" />
+                                          <TableColumn fx:id="tableColumnProcessAnnualizationStatus" prefWidth="120.0" text="Status" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane VBox.vgrow="NEVER">
+                                 <children>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="95.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="384.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Total Records :">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="3.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="labelTotalProcessRecords" text="                          " GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <AnchorPane prefHeight="96.0" prefWidth="722.0">
+                                 <children>
+                                    <GridPane prefHeight="77.0" prefWidth="722.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" percentWidth="0.0" prefWidth="242.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="627.0" minWidth="10.0" prefWidth="601.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Employee ID :" GridPane.halignment="LEFT">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Employee Name :" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Client :" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Status :" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelEmployeeID" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelEmployeeName" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelClient" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelStatus" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="289.0" prefWidth="711.0">
+                                 <children>
+                                    <GridPane layoutX="0.5" layoutY="0.5" prefHeight="266.0" prefWidth="679.0" style="-fx-grid-lines-visible: true;">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="251.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Taxable" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Nontaxable" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Basic Salary" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Holiday Pay" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Overtime Pay" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Night Shift Differential" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="13th Month and Other Benefits" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="De Minimis Benefits" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="SSS, GSIS, PHIC &amp; Pag-ibig Contributions" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Salaries &amp; Other Forms of Compensation" GridPane.rowIndex="10">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Total" GridPane.rowIndex="11">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label text="Sub Total " GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" right="20.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableBasicSalary" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableHolidayPay" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableOvertimePay" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableNightDiff" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxable13thMonthPay" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableDeminimis" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableContributions" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableSalariesAndCompensation" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableBasicSalary" alignment="CENTER" text="          " wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableHolidayPay" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableOvertimePay" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableNightDiff" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableSubTotal" alignment="CENTER" text="          " underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableSubTotal" alignment="CENTER" text="          " underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxable13thMonthPay" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableDeminimis" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableContributions" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableSalariesAndCompensation" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTotalNonTaxable" alignment="CENTER" text="     " underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTotalTaxable" alignment="CENTER" text="     " underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#handleShowAnnualizationDetailsNonTaxable13thMonthOtherBenefits" prefHeight="25.0" prefWidth="26.0" text="..." GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                             <GridPane.margin>
+                                                <Insets right="2.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#handleShowAnnualizationDetailsDeminimis" prefHeight="25.0" prefWidth="26.0" text="..." GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+                                             <GridPane.margin>
+                                                <Insets right="2.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#handleShowAnnualizationDetailsTaxable13thMonthOtherBenefits" prefHeight="25.0" prefWidth="26.0" text="..." GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                             <GridPane.margin>
+                                                <Insets right="2.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#handleShowAnnualizationDetailsSalariesOtherCompensation" prefHeight="25.0" prefWidth="26.0" text="..." GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
+                                             <GridPane.margin>
+                                                <Insets right="2.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Label text="Hazard Pay" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableHazardPay" alignment="CENTER" text="          " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelTaxableHazardPay" alignment="CENTER" text="          " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#handleShowAnnualizationDetailsTaxableOtherCompensation" prefHeight="25.0" prefWidth="26.0" text="..." GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="234.0" prefWidth="711.0">
+                                 <children>
+                                    <GridPane layoutY="1.0" prefHeight="194.0" prefWidth="563.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" percentWidth="0.0" prefWidth="242.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="502.0" minWidth="10.0" prefWidth="321.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label alignment="CENTER_RIGHT" text="Gross Compensation Income :" GridPane.halignment="LEFT">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Less : Total Non - Taxable :" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Taxable Compensation Income :" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Less: Total Exemption :" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Net Taxable Compensation Income :" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Total Amount of Taxes Withheld :" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Tax Due :" GridPane.halignment="LEFT" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Remarks :" GridPane.halignment="LEFT" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Date Lock :" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelGrossCompensation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelNonTaxableCompensation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelTaxableCompensation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelTotalExemption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelNetTaxableCompensation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelTotalTaxesWithheld" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelEmployeeTax" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelRemarks" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="labelDateLock" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" text="Import :" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labelImport" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
